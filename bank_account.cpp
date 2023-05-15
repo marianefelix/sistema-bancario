@@ -1,19 +1,22 @@
+#include <iostream>
+using namespace std;
+
 class BankAccount {
     private:
         int userID;
         double balance;
 
     public:
-        BanckAccount(int id, double initialBalance) {
-            userID = id;
-            balance = initialBalance;
+        BankAccount(int id, double initialBalance) {
+            this->userID = id;
+            this->balance = initialBalance;
         }
 
         int getUserID() {
-            return userID;
+            return this->userID;
         }
 
         double getBalance() {
-            return balance;
+            return this->balance;
         }
-}
+};
