@@ -20,16 +20,16 @@ class BankAccount {
             return this->balance;
         }
 
-        void credit (BankAccount bank, double value) {
-		    bank->balance = bank->balance + value;
+        void credit (double value) {
+		    this->balance = this->balance + value;
 	    }
 
-        void debit (BankAccount bank, double value) {
-		    bank->balance = bank->balance - value;
+        void debit (double value) {
+		    this->balance = this->balance - value;
 	    }
 
-        void transfer (BankAccount origin, BankAccount destination, double value) {
-		    debit(origin, value);
-		    credit(destination, value);
+        void transfer (BankAccount* destination, double value) {
+		    this->debit(value);
+		    destination->credit(value);
 	    }
 };
