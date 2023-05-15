@@ -7,8 +7,6 @@ class BankAccount {
         double balance;
 
     public:
-        BankAccount();
-
         BankAccount(int id, double initialBalance) {
             this->userID = id;
             this->balance = initialBalance;
