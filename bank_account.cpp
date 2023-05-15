@@ -19,4 +19,17 @@ class BankAccount {
         double getBalance() {
             return this->balance;
         }
+
+        void credit (BankAccount bank, double value) {
+		    bank->balance = bank->balance + value;
+	    }
+
+        void debit (BankAccount bank, double value) {
+		    bank->balance = bank->balance - value;
+	    }
+
+        void transfer (BankAccount origin, BankAccount destination, double value) {
+		    debit(origin, value);
+		    credit(destination, value);
+	    }
 };
