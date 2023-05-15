@@ -3,17 +3,17 @@ using namespace std;
 
 class BankAccount {
     private:
-        int userID;
+        int accountID;
         double balance;
 
     public:
         BankAccount(int id, double initialBalance) {
-            this->userID = id;
+            this->accountID = id;
             this->balance = initialBalance;
         }
 
-        int getUserID() {
-            return this->userID;
+        int getAccountID() {
+            return this->accountID;
         }
 
         double getBalance() {
