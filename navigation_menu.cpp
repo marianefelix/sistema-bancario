@@ -17,25 +17,22 @@ public:
     cout << "---------------------------" << endl;
   }
 
-  void handleSelectedOption(Bank& bank) {
-    int selectedOption;
-    cin >> selectedOption;
-
+  void handleSelectedOption(Bank& bank, int selectedOption) {
     switch(selectedOption) {
       case 1:
-        handleCreateAccount();
+        handleCreateAccount(bank);
         break;
       case 2:
-        handleGetBalance();
+        handleGetBalance(bank);
         break;
       case 3:
-        handleCredit();
+        handleCredit(bank);
         break;
       case 4:
-        handleDebit();
+        handleDebit(bank);
         break;
       case 5:
-        handleTransfer();
+        handleTransfer(bank);
         break;
       default:
         cout << "Opção inválida" << endl;
