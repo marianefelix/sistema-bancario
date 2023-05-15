@@ -42,7 +42,20 @@ public:
     }
   }
 
-  void handleCreateAccount() {}
+  int getAccountID() {
+    int accountID;
+
+    cout << "Digite o número da conta: " << endl;
+    cin >> accountID;
+
+    return accountID;
+  }
+
+  void handleCreateAccount(Bank& bank) {
+    int accountID = getAccountID();
+    string response = bank.addAccount(accountID)
+    cout << response << endl;
+  }
 
   void handleGetBalance() {}
 
