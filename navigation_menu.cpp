@@ -17,7 +17,10 @@ public:
     cout << "---------------------------" << endl;
   }
 
-  void handleSelectedOption(Bank& bank, int selectedOption) {
+  void handleSelectedOption(Bank& bank) {
+    int selectedOption;
+    cin >> selectedOption;
+
     switch(selectedOption) {
       case 1:
         handleCreateAccount(bank);
@@ -51,7 +54,7 @@ public:
 
   void handleCreateAccount(Bank& bank) {
     int accountID = getAccountID();
-    string response = bank.addAccount(accountID)
+    string response = bank.addAccount(accountID);
     cout << response << endl;
   }
 
@@ -103,6 +106,7 @@ public:
   
   void handleTransfer(Bank& bank) {
     int originAccountID, destinationAccountID;
+    double value;
 
     cout << "Digite o número da conta de origem: " << endl;
     cin >> originAccountID;
@@ -124,4 +128,4 @@ public:
         cout << "Seu novo saldo é: " << accountBalance <<  endl;
     }
   }
-}
+};

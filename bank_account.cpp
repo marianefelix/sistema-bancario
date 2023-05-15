@@ -28,8 +28,8 @@ class BankAccount {
 		    this->balance = this->balance - value;
 	    }
 
-        void transfer (BankAccount* destination, double value) {
+        void transfer (BankAccount destination, double value) {
 		    this->debit(value);
-		    destination->credit(value);
+		    destination.credit(value);
 	    }
 };

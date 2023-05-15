@@ -13,7 +13,7 @@ class Bank {
         Bank() {}
 
         // Add an account to the bank
-        void addAccount(int accountID) {
+        string addAccount(int accountID) {
             for (BankAccount account : this->accounts) {
                 if (account.getAccountID() == accountID) {
                     return "Essa conta já existe.";
