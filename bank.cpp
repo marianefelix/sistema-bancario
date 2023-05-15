@@ -2,32 +2,38 @@
 #include <iostream>
 #include "bank_account.cpp"
 
+using namespace std;
+
 class Bank {
+    private:
+        vector<BankAccount> accounts;
+    
     public:
         // Constructor
         Bank() {}
 
         // Add an account to the bank
-        void addAccount() {
-            int accountNumber;
-            std::cout << "Enter account number: ";
-            std::cin >> accountNumber;
-
-            for(BankAccount account : accounts) {
-                if(account.getUserID() == accountNumber) {
-                    std::cout << "Account already exists." << std::endl;
-                    return;
+        void addAccount(int accountID) {
+            for (BankAccount account : this->accounts) {
+                if (account.getAccountID() == accountID) {
+                    return "Essa conta já existe.";
                 }
             }
 
-            BankAccount new_account(accountNumber, 0.0);
-            accounts.push_back(new_account);
+            BankAccount newAccount(accountID, 0.0);
+            this->accounts.push_back(newAccount);
 
-            std::cout << "Account " << accountNumber << " created." << std::endl;
-            return;
-        }    
+            return "Conta criada com sucesso!";
+        }
 
-    private:
-        std::vector<BankAccount> accounts;
+        BankAccount getAccountByID(int accountID) {
+            for (BankAccount account : this->accounts) {
+                if (account.getAccountID() == accountID) {
+                    return account;
+                }
+            }
 
+            BankAccount errorAccount(-1, -1);
+            return errorAccount;
+        }
 };
