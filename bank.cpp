@@ -25,4 +25,15 @@ class Bank {
 
             return "Conta criada com sucesso!";
         }
+
+        BankAccount getAccountByID(int accountID) {
+            for (BankAccount account : this->accounts) {
+                if (account.getAccountID() == accountID) {
+                    return account;
+                }
+            }
+
+            BankAccount errorAccount(-1, -1);
+            return errorAccount;
+        }
 };

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "bank.cpp"
+#include "bank_account.cpp"
 
 using namespace std;
 
@@ -57,7 +58,17 @@ public:
     cout << response << endl;
   }
 
-  void handleGetBalance() {}
+  void handleGetBalance() {
+    int accountID = getAccountID();
+    BankAccount account = bank.getAccountByID(accountID);
+
+    if (account.getAccountID() == -1) {
+        cout << "Essa conta não existe" << endl;
+    } else {
+        double accountBalance = account.getBalance();
+        cout << "O saldo da sua conta é: " << accountBalance <<  endl;
+    }
+  }
 
   void handleDebit() {}
   
