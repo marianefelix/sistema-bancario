@@ -11,16 +11,16 @@ int main() {
     Bank bank;
     
     // After the app is launched, the menu should be called
-    // int selectedOption;
+    int selectedOption;
 
-    // do {
-    //     navigationMenu.showOptions();
-    //     std::cin >> selectedOption;
-    // } while (selectedOption != 6) {
+    do {
+        navigationMenu.showOptions();
+        cin >> selectedOption;
+    } while (selectedOption != 6); 
     
     navigationMenu.showOptions();
 
-    navigationMenu.handleSelectedOption(bank);
+    navigationMenu.handleSelectedOption(bank, selectedOption);
 
     return 0;
 }
