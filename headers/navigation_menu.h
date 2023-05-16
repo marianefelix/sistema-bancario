@@ -9,8 +9,8 @@ class NavigationMenu {
         int getAccountID();
 
     public:
-        NavigationMenu(); //construtor
-        ~NavigationMenu(); //destrutor
+        NavigationMenu(); //constructor
+        ~NavigationMenu(); //destructor
 
         void showOptions();
 

@@ -9,8 +9,8 @@ class Bank {
         std::vector<BankAccount> accounts;
     
     public:
-        Bank(); //construtor
-        ~Bank(); //destrutor
+        Bank(); //constructor
+        ~Bank(); //destructor
 
         std::string addAccount(int accountID);
 
