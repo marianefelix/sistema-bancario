@@ -1,6 +1,6 @@
 #include <iostream>
-#include "bank.cpp"
-#include "navigation_menu.cpp"
+#include "src/bank.cpp"
+#include "src/navigation_menu.cpp"
 using namespace std;
 
 int main() {
