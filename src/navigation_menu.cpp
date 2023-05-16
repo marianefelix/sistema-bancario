@@ -104,7 +104,7 @@ void NavigationMenu::handleDebit(Bank& bank) {
 }
   
 void NavigationMenu::handleTransfer(Bank& bank) {
-  int originAccountID, destinationAccountID;
+  int originAccountID, destinationAccountID, value;
 
   cout << "Digite o número da conta de origem: " << endl;
   cin >> originAccountID;
