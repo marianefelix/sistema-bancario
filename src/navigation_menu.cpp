@@ -62,12 +62,12 @@ void NavigationMenu::handleCreateAccount(Bank& bank) {
 
 void NavigationMenu::handleGetBalance(Bank& bank) {
   int accountID = getAccountID();
-  BankAccount account = bank.getAccountByID(accountID);
+  BankAccount* account = bank.getAccountByID(accountID);
 
-  if (account.getAccountID() == -1) {
+  if (account == nullptr) {
       cout << "Essa conta não existe" << endl;
   } else {
-      double accountBalance = account.getBalance();
+      double accountBalance = account->getBalance();
       cout << "O saldo da sua conta é: " << accountBalance <<  endl;
   }
 }
@@ -79,12 +79,13 @@ void NavigationMenu::handleCredit(Bank& bank) {
   cout << "Digite o valor a ser creditado: " << endl;
   cin >> value;
 
-  BankAccount account = bank.getAccountByID(accountID);
-  if (account.getAccountID() == -1) {
+  BankAccount* account = bank.getAccountByID(accountID);
+
+  if (account == nullptr) {
       cout << "Essa conta não existe" << endl;
   } else {
-      account.credit(value);
-      double accountBalance = account.getBalance();
+      account->credit(value);
+      double accountBalance = account->getBalance();
       cout << "Seu novo saldo é: " << accountBalance <<  endl;
   }
 }
@@ -96,12 +97,12 @@ void NavigationMenu::handleDebit(Bank& bank) {
   cout << "Digite o valor a ser debitado: " << endl;
   cin >> value;
 
-  BankAccount account = bank.getAccountByID(accountID);
-  if (account.getAccountID() == -1) {
+  BankAccount* account = bank.getAccountByID(accountID);
+  if (account == nullptr) {
       cout << "Essa conta não existe" << endl;
   } else {
-      account.debit(value);
-      double accountBalance = account.getBalance();
+      account->debit(value);
+      double accountBalance = account->getBalance();
       cout << "Seu novo saldo é: " << accountBalance <<  endl;
   }
 }
@@ -119,14 +120,14 @@ void NavigationMenu::handleTransfer(Bank& bank) {
   cout << "Digite o valor a ser transferido: " << endl;
   cin >> value;
 
-  BankAccount originAccount = bank.getAccountByID(originAccountID);
-  BankAccount destinationAccount = bank.getAccountByID(destinationAccountID);
+  BankAccount* originAccount = bank.getAccountByID(originAccountID);
+  BankAccount* destinationAccount = bank.getAccountByID(destinationAccountID);
 
-  if (originAccount.getAccountID() == -1 || destinationAccount.getAccountID() == -1) {
+  if (originAccount == nullptr || destinationAccount == nullptr) {
       cout << "Erro ao encontrar contas. Por favor, insira um número válido." << endl;
   } else {
-      originAccount.transfer(destinationAccount, value);
-      double accountBalance = originAccount.getBalance();
+      originAccount->transfer(*destinationAccount, value);
+      double accountBalance = originAccount->getBalance();
       cout << "Seu novo saldo é: " << accountBalance <<  endl;
   }
 }

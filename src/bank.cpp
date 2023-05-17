@@ -6,29 +6,33 @@
 using namespace std;
 
 Bank::Bank() {}
-Bank::~Bank() {}
+
+Bank::~Bank() {
+    for (BankAccount* account : this->accounts) {
+        delete account;
+    }
+}
 
 // Add an account to the bank
-std::string Bank::addAccount(int accountID) {
-    for (BankAccount account : this->accounts) {
-        if (account.getAccountID() == accountID) {
+string Bank::addAccount(int accountID) {
+    for (BankAccount* account : this->accounts) {
+        if (account->getAccountID() == accountID) {
             return "Essa conta já existe.";
         }
     }
 
-    BankAccount newAccount(accountID, 0.0);
+    BankAccount* newAccount = new BankAccount(accountID, 0.0);
     this->accounts.push_back(newAccount);
 
     return "Conta criada com sucesso!";
 }
 
-BankAccount Bank::getAccountByID(int accountID) {
-    for (BankAccount account : this->accounts) {
-        if (account.getAccountID() == accountID) {
+BankAccount* Bank::getAccountByID(int accountID) {
+    for (BankAccount* account : this->accounts) {
+        if (account->getAccountID() == accountID) {
             return account;
         }
     }
 
-    BankAccount errorAccount(-1, -1);
-    return errorAccount;
+    return nullptr;
 }
