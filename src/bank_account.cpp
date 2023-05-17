@@ -9,11 +9,11 @@ BankAccount::BankAccount(int id, double initialBalance) {
 
 BankAccount::~BankAccount() {}
 
-int BankAccount::getAccountID() {
+int BankAccount::getAccountID() const {
     return this->accountID;
 }
 
-double BankAccount::getBalance() {
+double BankAccount::getBalance() const {
     return this->balance;
 }
 
@@ -25,7 +25,7 @@ void BankAccount::debit(double value) {
     this->balance = this->balance - value;
 }
 
-void BankAccount::transfer(BankAccount destination, double value) {
+void BankAccount::transfer(BankAccount& destination, double value) {
     this->debit(value);
     destination.credit(value);
 }

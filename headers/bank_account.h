@@ -10,15 +10,15 @@ class BankAccount {
         BankAccount(int id, double initialBalance); //constructor
         ~BankAccount(); //destructor
 
-        int getAccountID();
+        int getAccountID() const;
 
-        double getBalance();
+        double getBalance() const;
 
         void credit(double value);
 
         void debit(double value);
 
-        void transfer(BankAccount destination, double value);
+        void transfer(BankAccount& destination, double value);
 };
 
 #endif
