@@ -45,6 +45,9 @@ void NavigationMenu::handleSelectedOption(Bank& bank, int selectedOption) {
     case 5:
       handleTransfer(bank);
       break;
+    case 6:
+      cout << "Seção encerrada" << endl;
+      break;
     default:
       cout << "Opção inválida" << endl;
       break;
@@ -53,7 +56,7 @@ void NavigationMenu::handleSelectedOption(Bank& bank, int selectedOption) {
 
 void NavigationMenu::handleCreateAccount(Bank& bank) {
   int accountID = getAccountID();
-  string response = bank.addAccount(accountID)
+  string response = bank.addAccount(accountID);
   cout << response << endl;
 }
 
@@ -105,6 +108,7 @@ void NavigationMenu::handleDebit(Bank& bank) {
   
 void NavigationMenu::handleTransfer(Bank& bank) {
   int originAccountID, destinationAccountID;
+  double value;
 
   cout << "Digite o número da conta de origem: " << endl;
   cin >> originAccountID;

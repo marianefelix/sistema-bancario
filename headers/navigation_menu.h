@@ -14,7 +14,7 @@ class NavigationMenu {
 
         void showOptions();
 
-        void handleSelectedOption(Bank& bank);
+        void handleSelectedOption(Bank& bank, int selectedOption);
 
         void handleCreateAccount(Bank& bank);
 
