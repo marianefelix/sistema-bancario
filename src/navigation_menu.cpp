@@ -45,6 +45,9 @@ void NavigationMenu::handleSelectedOption(Bank& bank, int selectedOption) {
     case 5:
       handleTransfer(bank);
       break;
+    case 6:
+      cout << "Seção encerrada" << endl;
+      break;
     default:
       cout << "Opção inválida" << endl;
       break;

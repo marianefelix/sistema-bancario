@@ -4,23 +4,20 @@
 using namespace std;
 
 int main() {
-    // Iniciate app
     NavigationMenu navigationMenu;
 
-    // Iniciate bank
     Bank bank;
-    
-    // After the app is launched, the menu should be called
-    int selectedOption;
+
+    int selectedOption = 0;
 
     do {
+        if(selectedOption == 6) {
+            break;
+        }
         navigationMenu.showOptions();
         std::cin >> selectedOption;
-    } while (selectedOption != 6);
-    
-    // navigationMenu.showOptions();
-
-    navigationMenu.handleSelectedOption(bank, selectedOption);
+        navigationMenu.handleSelectedOption(bank, selectedOption);
+    } while (selectedOption < 6);
 
     return 0;
 }
