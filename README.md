@@ -6,8 +6,8 @@ From the root of the project
 
 `$ g++ -std=c++11 -Wall -Wextra -c src/bank_account.cpp src/bank.cpp src/navigation_menu.cpp src/main.cpp`
 
-`$ g++ -o bank bank_account.o bank.o navigation_menu.o main.o`
+`$ g++ -o bankapp bank_account.o bank.o navigation_menu.o main.o`
 
 and then
 
-`$ ./bank`
+`$ ./bankapp`
