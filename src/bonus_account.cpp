@@ -4,10 +4,10 @@ using namespace std;
 
 class BonusAccount : public BankAccount {
 private:
-    int score = 10;
+    int score;
 
 public:
-    BonusAccount(int id, double initialBalance) : BankAccount(id, initialBalance) {}
+    BonusAccount(int id, double initialBalance) : BankAccount(id, initialBalance), score(10) {}
     ~BonusAccount();
 
     void addBonusCredit(double amount) {
