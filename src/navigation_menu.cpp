@@ -2,6 +2,7 @@
 #include "../headers/bank.h"
 #include "../headers/bank_account.h"
 #include "../headers/navigation_menu.h"
+#include "../headers/bonus_account.h"
 
 using namespace std;
 
