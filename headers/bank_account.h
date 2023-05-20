@@ -10,6 +10,10 @@ class BankAccount {
         BankAccount(int id, double initialBalance); // constructor
         ~BankAccount(); // destructor
 
+        virtual void addBonusCredit(double value) = 0;
+
+        virtual void addBonusTransfer(double value) = 0;
+
         int getAccountID() const;
 
         double getBalance() const;
