@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include "bank_account.h"
+#include "savings_account.h"
 
 class Bank {
     private:
@@ -14,6 +15,7 @@ class Bank {
         ~Bank(); //destructor
 
         std::string addAccount(int accountID);
+        std::string addSavingsAccount(int accountID);
         BankAccount* getAccountByID(int accountID);
 };
 
