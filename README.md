@@ -4,7 +4,7 @@ This system simulates a simple bank. The main purpose of this repository is to p
 <br>
 
 ## Compile and run with Makefile
-If your operating system is `Windows`, you must have MinGW installed.
+If your operating system is **`Windows`**, you must have MinGW installed.
 If not, please install it.
 If you do, follow the next steps to run the system:
 - Be in the root folder of the project
@@ -16,7 +16,7 @@ If you do, follow the next steps to run the system:
 
 <br>
 
-If your operating system is `Linux`, you only need to follow these steps:
+If your operating system is **`Linux`**, you only need to follow these steps:
 - Be in the project root folder
 - In the terminal, run the command:
 > $ `make`
