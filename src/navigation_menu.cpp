@@ -1,6 +1,7 @@
 #include <iostream>
 #include "../headers/bank.h"
 #include "../headers/bank_account.h"
+#include "../headers/savings_account.h"
 #include "../headers/navigation_menu.h"
 #include "../headers/bonus_account.h"
 
@@ -18,6 +19,19 @@ int NavigationMenu::getAccountID() {
   return accountID;
 }
 
+int NavigationMenu::getTypeAccount() {
+  int typeAccount;
+
+  cout << "---------------------------" << endl;
+  cout << "Escolha o tipo de conta:" << endl;
+  cout << "1 - Conta Simples" << endl;
+  cout << "2 - Conta Poupança" << endl;
+  cin >> typeAccount;
+  cout << "---------------------------" << endl;
+
+  return typeAccount;
+}
+
 void NavigationMenu::showOptions() {
   cout << "---------- Menu ----------" << endl;
   cout << "1 - Criar conta" << endl;
@@ -25,7 +39,8 @@ void NavigationMenu::showOptions() {
   cout << "3 - Creditar" << endl;
   cout << "4 - Debitar" << endl;
   cout << "5 - Realizar transferência" << endl;
-  cout << "6 - Sair" << endl;
+  cout << "6 - Render Juros" << endl;
+  cout << "7 - Sair" << endl;
   cout << "---------------------------" << endl;
 }
 
@@ -47,6 +62,9 @@ void NavigationMenu::handleSelectedOption(Bank& bank, int selectedOption) {
       handleTransfer(bank);
       break;
     case 6:
+      handleInterestRate(bank);
+      break;
+    case 7:
       cout << "Seção encerrada" << endl;
       break;
     default:
@@ -56,8 +74,30 @@ void NavigationMenu::handleSelectedOption(Bank& bank, int selectedOption) {
 }
 
 void NavigationMenu::handleCreateAccount(Bank& bank) {
+  int typeAccount = getTypeAccount();
+
+  switch(typeAccount) {
+    case 1:
+      handleCreateNormalAccount(bank);
+      break;
+    case 2:
+      handleCreateSavingsAccount(bank);
+      break;
+    default:
+      cout << "Opção inválida" << endl;
+      break;
+  }
+}
+
+void NavigationMenu::handleCreateNormalAccount(Bank& bank) {
   int accountID = getAccountID();
   string response = bank.addAccount(accountID);
+  cout << response << endl;
+}
+
+void NavigationMenu::handleCreateSavingsAccount(Bank& bank) {
+  int accountID = getAccountID();
+  string response = bank.addSavingsAccount(accountID);
   cout << response << endl;
 }
 
@@ -130,5 +170,25 @@ void NavigationMenu::handleTransfer(Bank& bank) {
       originAccount->transfer(*destinationAccount, value);
       double accountBalance = originAccount->getBalance();
       cout << "Seu novo saldo é: " << accountBalance <<  endl;
+  }
+}
+
+void NavigationMenu::handleInterestRate(Bank& bank) {
+  int accountID = getAccountID();
+  double interestRate;
+
+  BankAccount* account = bank.getAccountByID(accountID);
+
+  SavingsAccount* savingsAccount = dynamic_cast<SavingsAccount*>(account);
+
+  if (savingsAccount == nullptr) {
+    cout << "Essa conta não é uma Conta Poupança." << endl;
+  } else {
+    cout << "Informe a taxa de juros:" << endl;
+    cin >> interestRate;
+
+    savingsAccount->applyInterestRate(interestRate);
+
+    cout << "Saldo atualizado: " << savingsAccount->getBalance() << endl;
   }
 }
