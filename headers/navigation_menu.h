@@ -7,6 +7,7 @@
 class NavigationMenu {
     private:
         int getAccountID();
+        int getTypeAccount();
 
     public:
         NavigationMenu(); //constructor
@@ -31,6 +32,8 @@ class NavigationMenu {
         void handleDebit(Bank& bank);
 
         void handleTransfer(Bank& bank);
+
+        void handleInterestRate(Bank& bank);
 };
 
 #endif

@@ -2,6 +2,7 @@
 #include "../headers/bank.h"
 #include "../headers/bank_account.h"
 #include "../headers/navigation_menu.h"
+#include "../headers/savings_account.h"
 #include "../headers/bonus_account.h"
 
 using namespace std;
@@ -39,7 +40,8 @@ void NavigationMenu::showOptions() {
   cout << "3 - Creditar" << endl;
   cout << "4 - Debitar" << endl;
   cout << "5 - Realizar transferência" << endl;
-  cout << "6 - Sair" << endl;
+  cout << "6 - Render Juros" << endl;
+  cout << "7 - Sair" << endl;
   cout << "---------------------------" << endl;
 }
 
@@ -61,6 +63,9 @@ void NavigationMenu::handleSelectedOption(Bank& bank, int selectedOption) {
       handleTransfer(bank);
       break;
     case 6:
+      handleInterestRate(bank);
+      break;
+    case 7:
       cout << "Seção encerrada" << endl;
       break;
     default:
@@ -197,5 +202,25 @@ void NavigationMenu::handleTransfer(Bank& bank) {
           cout << "O bonus da conta de destino aumentou " << bonusValue << " ponto(s)! Seu bonus agora é: " << bonusAccount->getScore() << endl;
         }
       }
+  }
+}
+
+void NavigationMenu::handleInterestRate(Bank& bank) {
+  int accountID = getAccountID();
+  double interestRate;
+
+  BankAccount* account = bank.getAccountByID(accountID);
+
+  SavingsAccount* savingsAccount = dynamic_cast<SavingsAccount*>(account);
+
+  if (savingsAccount == nullptr) {
+    cout << "Essa conta não é uma Conta Poupança." << endl;
+  } else {
+    cout << "Informe a taxa de juros:" << endl;
+    cin >> interestRate;
+
+    savingsAccount->applyInterestRate(interestRate);
+
+    cout << "Saldo atualizado: " << savingsAccount->getBalance() << endl;
   }
 }

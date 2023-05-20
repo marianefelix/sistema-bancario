@@ -8,7 +8,9 @@ class BankAccount {
     
     public:
         BankAccount(int id, double initialBalance); // constructor
-        ~BankAccount(); // destructor
+        virtual ~BankAccount(); // destructor
+
+        virtual void applyInterestRate(double value) = 0;
 
         virtual void addBonusCredit(double value) = 0;
 

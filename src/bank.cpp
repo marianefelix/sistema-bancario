@@ -24,7 +24,7 @@ string Bank::addAccount(int accountID) {
         }
     }
 
-    BankAccount* newAccount = new BankAccount(accountID, 0.0);
+    BankAccount* newAccount = new GenericAccount(accountID, 0.0);
     this->accounts.push_back(newAccount);
 
     return "Conta Simples criada com sucesso!";
