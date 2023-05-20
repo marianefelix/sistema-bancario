@@ -225,23 +225,3 @@ void NavigationMenu::handleInterestRate(Bank& bank) {
     cout << "Saldo atualizado: " << savingsAccount->getBalance() << endl;
   }
 }
-
-void NavigationMenu::handleInterestRate(Bank& bank) {
-  int accountID = getAccountID();
-  double interestRate;
-
-  BankAccount* account = bank.getAccountByID(accountID);
-
-  SavingsAccount* savingsAccount = dynamic_cast<SavingsAccount*>(account);
-
-  if (savingsAccount == nullptr) {
-    cout << "Essa conta não é uma Conta Poupança." << endl;
-  } else {
-    cout << "Informe a taxa de juros:" << endl;
-    cin >> interestRate;
-
-    savingsAccount->applyInterestRate(interestRate);
-
-    cout << "Saldo atualizado: " << savingsAccount->getBalance() << endl;
-  }
-}
