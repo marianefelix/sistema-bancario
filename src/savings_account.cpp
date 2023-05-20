@@ -12,7 +12,7 @@ double SavingsAccount::getInterestRate() const {
     return this->interestRate;
 }
 
-void SavingsAccount::applyInterestRate() {
-    double interest = this->getBalance() * this->interestRate;
+void SavingsAccount::applyInterestRate(double value) {
+    double interest = this->getBalance() * (value / 100);
     this->credit(interest);
 }

@@ -11,9 +11,9 @@ class SavingsAccount : public BankAccount { // inherits BankAccount class
         SavingsAccount(int id, double initialBalance); // constructor
         ~SavingsAccount(); // destructor
 
-        double getInterestRate();
+        double getInterestRate() const;
 
-        void applyInterestRate();
+        void applyInterestRate(double value);
 };
 
 #endif
