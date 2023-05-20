@@ -7,8 +7,8 @@ class BankAccount {
         double balance;
     
     public:
-        BankAccount(int id, double initialBalance); //constructor
-        ~BankAccount(); //destructor
+        BankAccount(int id, double initialBalance); // constructor
+        ~BankAccount(); // destructor
 
         int getAccountID() const;
 
