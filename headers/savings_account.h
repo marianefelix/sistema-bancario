@@ -9,11 +9,13 @@ class SavingsAccount : public BankAccount { // inherits BankAccount class
     
     public:
         SavingsAccount(int id, double initialBalance); // constructor
-        ~SavingsAccount(); // destructor
+        virtual ~SavingsAccount(); // destructor
 
         double getInterestRate() const;
 
-        void applyInterestRate(double value);
+        void applyInterestRate(double value) override;
+        virtual void addBonusCredit(double value);
+        virtual void addBonusTransfer(double value);
 };
 
 #endif
