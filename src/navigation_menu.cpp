@@ -1,6 +1,7 @@
 #include <iostream>
 #include "../headers/bank.h"
 #include "../headers/bank_account.h"
+#include "../headers/savings_account.h"
 #include "../headers/navigation_menu.h"
 #include "../headers/savings_account.h"
 #include "../headers/bonus_account.h"
@@ -202,6 +203,26 @@ void NavigationMenu::handleTransfer(Bank& bank) {
           cout << "O bonus da conta de destino aumentou " << bonusValue << " ponto(s)! Seu bonus agora é: " << bonusAccount->getScore() << endl;
         }
       }
+  }
+}
+
+void NavigationMenu::handleInterestRate(Bank& bank) {
+  int accountID = getAccountID();
+  double interestRate;
+
+  BankAccount* account = bank.getAccountByID(accountID);
+
+  SavingsAccount* savingsAccount = dynamic_cast<SavingsAccount*>(account);
+
+  if (savingsAccount == nullptr) {
+    cout << "Essa conta não é uma Conta Poupança." << endl;
+  } else {
+    cout << "Informe a taxa de juros:" << endl;
+    cin >> interestRate;
+
+    savingsAccount->applyInterestRate(interestRate);
+
+    cout << "Saldo atualizado: " << savingsAccount->getBalance() << endl;
   }
 }
 

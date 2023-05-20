@@ -14,8 +14,11 @@ class SavingsAccount : public BankAccount { // inherits BankAccount class
         double getInterestRate() const;
 
         void applyInterestRate(double value) override;
+<<<<<<< HEAD
         virtual void addBonusCredit(double value);
         virtual void addBonusTransfer(double value);
+=======
+>>>>>>> 76e138ed006e22f608b7c94acdd2ac8682f722e6
 };
 
 #endif
