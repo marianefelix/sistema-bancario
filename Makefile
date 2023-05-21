@@ -15,7 +15,7 @@ objects/bonus_account.o: src/bonus_account.cpp headers/bonus_account.h objects/b
 objects/bank.o: src/bank.cpp headers/bank.h objects/bank_account.o objects/generic_account.o objects/savings_account.o objects/bonus_account.o
 	g++ src/bank.cpp -Iheaders -Wall -ansi -pedantic -std=c++11 -g -c -o objects/bank.o
 
-objects/navigation_menu.o: src/navigation_menu.cpp headers/navigation_menu.h objects/bank_account.o objects/generic_account.o objects/savings_account.o bonus_account.o
+objects/navigation_menu.o: src/navigation_menu.cpp headers/navigation_menu.h objects/bank_account.o objects/generic_account.o objects/savings_account.o
 	g++ src/navigation_menu.cpp -Iheaders -Wall -ansi -pedantic -std=c++11 -g -c -o objects/navigation_menu.o
 
 objects/main.o: src/main.cpp objects/navigation_menu.o objects/bank.o
@@ -26,7 +26,7 @@ bankapp: objects/main.o objects/navigation_menu.o objects/bank.o objects/bank_ac
 
 # cria a pasta objects
 create_objects:
-	mkdir -p objects
+	mkdir objects
 
 all: create_objects bankapp
 
