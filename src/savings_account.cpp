@@ -16,3 +16,6 @@ void SavingsAccount::applyInterestRate(double value) {
     double interest = this->getBalance() * (value / 100);
     this->credit(interest);
 }
+
+void SavingsAccount::addBonusCredit(double) {}
+void SavingsAccount::addBonusTransfer(double) {}

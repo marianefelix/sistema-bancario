@@ -12,6 +12,10 @@ class BankAccount {
 
         virtual void applyInterestRate(double value) = 0;
 
+        virtual void addBonusCredit(double value) = 0;
+
+        virtual void addBonusTransfer(double value) = 0;
+
         int getAccountID() const;
 
         double getBalance() const;

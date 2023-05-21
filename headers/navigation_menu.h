@@ -23,6 +23,8 @@ class NavigationMenu {
 
         void handleCreateSavingsAccount(Bank& bank);
 
+        void handleCreateBonusAccount(Bank& bank);
+
         void handleGetBalance(Bank& bank);
 
         void handleCredit(Bank& bank);
