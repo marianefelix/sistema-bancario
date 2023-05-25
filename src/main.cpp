@@ -11,13 +11,10 @@ int main() {
     int selectedOption = 0;
 
     do {
-        if(selectedOption == 6) {
-            break;
-        }
         navigationMenu.showOptions();
         std::cin >> selectedOption;
         navigationMenu.handleSelectedOption(bank, selectedOption);
-    } while (selectedOption < 6);
+    } while (selectedOption < 7);
 
     return 0;
 }

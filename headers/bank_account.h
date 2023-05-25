@@ -7,8 +7,14 @@ class BankAccount {
         double balance;
     
     public:
-        BankAccount(int id, double initialBalance); //constructor
-        ~BankAccount(); //destructor
+        BankAccount(int id, double initialBalance); // constructor
+        virtual ~BankAccount(); // destructor
+
+        virtual void applyInterestRate(double value) = 0;
+
+        virtual void addBonusCredit(double value) = 0;
+
+        virtual void addBonusTransfer(double value) = 0;
 
         int getAccountID() const;
 
