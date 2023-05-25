@@ -137,6 +137,8 @@ void NavigationMenu::handleCredit(Bank& bank) {
 
   if (account == nullptr) {
       cout << "Essa conta não existe" << endl;
+  } else if (value < 0) {
+      cout << "Digite um valor maior ou igual a 0." << endl;
   } else {
       account->credit(value);
       double accountBalance = account->getBalance();
@@ -163,6 +165,8 @@ void NavigationMenu::handleDebit(Bank& bank) {
   BankAccount* account = bank.getAccountByID(accountID);
   if (account == nullptr) {
       cout << "Essa conta não existe" << endl;
+  } else if (value < 0) {
+      cout << "Digite um valor maior ou igual a 0." << endl;
   } else {
       account->debit(value);
       double accountBalance = account->getBalance();
@@ -190,6 +194,8 @@ void NavigationMenu::handleTransfer(Bank& bank) {
 
   if (originAccount == nullptr || destinationAccount == nullptr) {
       cout << "Erro ao encontrar contas. Por favor, insira um número válido." << endl;
+  } else if (value < 0) {
+      cout << "Digite um valor maior ou igual a 0." << endl;
   } else {
       originAccount->transfer(*destinationAccount, value);
       double accountBalance = originAccount->getBalance();

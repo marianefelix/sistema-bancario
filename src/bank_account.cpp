@@ -22,10 +22,18 @@ void BankAccount::credit(double value) {
 }
 
 void BankAccount::debit(double value) {
-    this->balance = this->balance - value;
+    double newBalance = this->balance - value;
+
+    if (newBalance > 0) {
+        this->balance = newBalance;
+    }
 }
 
 void BankAccount::transfer(BankAccount& destination, double value) {
-    this->debit(value);
-    destination.credit(value);
+    double newBalance = this->balance - value;
+
+    if (newBalance > 0) {
+        this->debit(value);
+        destination.credit(value);
+    }
 }
