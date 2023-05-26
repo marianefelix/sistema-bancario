@@ -13,7 +13,7 @@ class Bank {
         Bank(); //constructor
         ~Bank(); //destructor
 
-        std::string addAccount(int accountID);
+        std::string addAccount(int accountID, double openingBalance);
         BankAccount* getAccountByID(int accountID);
 };
 

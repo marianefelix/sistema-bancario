@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <sstream>
 #include "../headers/bank.h"
 #include "../headers/bank_account.h"
 #include "../headers/navigation_menu.h"
@@ -56,7 +58,8 @@ void NavigationMenu::handleSelectedOption(Bank& bank, int selectedOption) {
 
 void NavigationMenu::handleCreateAccount(Bank& bank) {
   int accountID = getAccountID();
-  string response = bank.addAccount(accountID);
+  double openingBalance = handleOpeningBalance();
+  string response = bank.addAccount(accountID, openingBalance);
   cout << response << endl;
 }
 
@@ -136,4 +139,23 @@ void NavigationMenu::handleTransfer(Bank& bank) {
       double accountBalance = originAccount->getBalance();
       cout << "Seu novo saldo é: " << accountBalance <<  endl;
   }
+}
+
+double NavigationMenu::handleOpeningBalance() {
+  double openingBalance;
+  string userInput;
+    
+  while(true) {
+    cout << "Digite o saldo inicial da conta: " << endl;
+    cin >> userInput;
+
+    istringstream iss(userInput);
+    if(iss >> openingBalance) {
+      break;  
+    } else {
+      cout << "Entrada inválida. Por favor, insira um valor numérico." << endl;
+    }
+  }
+
+  return openingBalance;
 }
