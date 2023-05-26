@@ -105,7 +105,8 @@ void NavigationMenu::handleCreateNormalAccount(Bank& bank) {
 
 void NavigationMenu::handleCreateSavingsAccount(Bank& bank) {
   int accountID = getAccountID();
-  string response = bank.addSavingsAccount(accountID);
+  double openingBalance = handleOpeningBalance();
+  string response = bank.addSavingsAccount(accountID, openingBalance);
   cout << response << endl;
 }
 

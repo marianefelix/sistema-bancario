@@ -45,14 +45,14 @@ string Bank::addBonusAccount(int accountID) {
 }
 
 // Add an savings account to the bank
-string Bank::addSavingsAccount(int accountID) {
+string Bank::addSavingsAccount(int accountID, double openingBalance) {
     for (BankAccount* account : this->accounts) {
         if (account->getAccountID() == accountID) {
             return "Essa conta já existe.";
         }
     }
 
-    BankAccount* newAccount = new SavingsAccount(accountID, 0.0);
+    BankAccount* newAccount = new SavingsAccount(accountID, openingBalance);
     this->accounts.push_back(newAccount);
 
     return "Conta Poupança criada com sucesso!";

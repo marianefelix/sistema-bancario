@@ -17,6 +17,10 @@ double BankAccount::getBalance() const {
     return this->balance;
 }
 
+void BankAccount::setBalance(double value) {
+    this->balance = value;
+}
+
 void BankAccount::credit(double value) {
     this->balance = this->balance + value;
 }
@@ -24,7 +28,7 @@ void BankAccount::credit(double value) {
 void BankAccount::debit(double value) {
     double newBalance = this->balance - value;
 
-    if (newBalance > 0) {
+    if (newBalance >= -1000) {
         this->balance = newBalance;
     }
 }
@@ -32,7 +36,7 @@ void BankAccount::debit(double value) {
 void BankAccount::transfer(BankAccount& destination, double value) {
     double newBalance = this->balance - value;
 
-    if (newBalance > 0) {
+    if (newBalance >= -1000) {
         this->debit(value);
         destination.credit(value);
     }
