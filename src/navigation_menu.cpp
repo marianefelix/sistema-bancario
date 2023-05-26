@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <sstream>
 #include "../headers/bank.h"
 #include "../headers/bank_account.h"
 #include "../headers/savings_account.h"
@@ -102,7 +104,8 @@ void NavigationMenu::handleCreateNormalAccount(Bank& bank) {
 
 void NavigationMenu::handleCreateSavingsAccount(Bank& bank) {
   int accountID = getAccountID();
-  string response = bank.addSavingsAccount(accountID);
+  double openingBalance = handleOpeningBalance();
+  string response = bank.addSavingsAccount(accountID, openingBalance);
   cout << response << endl;
 }
 
@@ -231,3 +234,23 @@ void NavigationMenu::handleInterestRate(Bank& bank) {
     cout << "Saldo atualizado: " << savingsAccount->getBalance() << endl;
   }
 }
+
+double NavigationMenu::handleOpeningBalance() {
+  double openingBalance;
+  string userInput;
+    
+  while(true) {
+    cout << "Digite o saldo inicial da conta: " << endl;
+    cin >> userInput;
+
+    istringstream iss(userInput);
+    if(iss >> openingBalance) {
+      break;  
+    } else {
+      cout << "Entrada inválida. Por favor, insira um valor numérico." << endl;
+    }
+  }
+
+  return openingBalance;
+}
+
