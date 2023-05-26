@@ -13,7 +13,7 @@ void BonusAccount::addBonusCredit(double amount) {
 }
 
 void BonusAccount::addBonusTransfer(double amount) {
-    int requiredAmount = 200;
+    int requiredAmount = 150;
     this->score += (static_cast<int>(amount) / requiredAmount);
 }
 

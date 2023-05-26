@@ -17,14 +17,14 @@ Bank::~Bank() {
 }
 
 // Add an account to the bank
-string Bank::addAccount(int accountID) {
+string Bank::addAccount(int accountID, double openingBalance) {
     for (BankAccount* account : this->accounts) {
         if (account->getAccountID() == accountID) {
             return "Essa conta já existe.";
         }
     }
 
-    BankAccount* newAccount = new GenericAccount(accountID, 0.0);
+    BankAccount* newAccount = new GenericAccount(accountID, openingBalance);
     this->accounts.push_back(newAccount);
 
     return "Conta Simples criada com sucesso!";
