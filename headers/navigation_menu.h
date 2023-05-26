@@ -25,6 +25,8 @@ class NavigationMenu {
         void handleDebit(Bank& bank);
 
         void handleTransfer(Bank& bank);
+
+        double handleOpeningBalance();
 };
 
 #endif
