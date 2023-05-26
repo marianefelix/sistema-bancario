@@ -36,8 +36,6 @@ class NavigationMenu {
         double handleOpeningBalance();
 
         void handleInterestRate(Bank& bank);
-
-        double handleOpeningBalance();
 };
 
 #endif
