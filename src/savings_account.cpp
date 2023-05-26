@@ -17,5 +17,22 @@ void SavingsAccount::applyInterestRate(double value) {
     this->credit(interest);
 }
 
+void SavingsAccount::debit(double value) {
+    double newBalance = this->getBalance() - value;
+
+    if (newBalance > 0) {
+        this->setBalance(newBalance);
+    }
+}
+
+void SavingsAccount::transfer(BankAccount& destination, double value) {
+    double newBalance = this->getBalance() - value;
+
+    if (newBalance > 0) {
+        this->debit(value);
+        destination.credit(value);
+    }
+}
+
 void SavingsAccount::addBonusCredit(double) {}
 void SavingsAccount::addBonusTransfer(double) {}
