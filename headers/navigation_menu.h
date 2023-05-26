@@ -7,6 +7,7 @@
 class NavigationMenu {
     private:
         int getAccountID();
+        int getTypeAccount();
 
     public:
         NavigationMenu(); //constructor
@@ -18,6 +19,12 @@ class NavigationMenu {
 
         void handleCreateAccount(Bank& bank);
 
+        void handleCreateNormalAccount(Bank& bank);
+
+        void handleCreateSavingsAccount(Bank& bank);
+
+        void handleCreateBonusAccount(Bank& bank);
+
         void handleGetBalance(Bank& bank);
 
         void handleCredit(Bank& bank);
@@ -27,6 +34,8 @@ class NavigationMenu {
         void handleTransfer(Bank& bank);
 
         double handleOpeningBalance();
+
+        void handleInterestRate(Bank& bank);
 };
 
 #endif
