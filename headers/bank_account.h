@@ -20,11 +20,13 @@ class BankAccount {
 
         double getBalance() const;
 
+        void setBalance(double value);
+
         void credit(double value);
 
-        void debit(double value);
+        virtual void debit(double value);
 
-        void transfer(BankAccount& destination, double value);
+        virtual void transfer(BankAccount& destination, double value);
 };
 
 #endif
