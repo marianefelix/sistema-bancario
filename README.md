@@ -3,6 +3,28 @@ This system simulates a simple bank. The main purpose of this repository is to p
 
 <br>
 
+## Project informations
+- Workflow: **`GitFlow`**
+
+- We use a commit pattern that can be found here: [**Conventional Commits**](https://www.conventionalcommits.org/en/v1.0.0/)
+
+- Here is an image of the code tree built by **GitKraken**:
+
+<br>
+
+![Tree head](./images/photo1.jpeg)
+
+![Tree body 3](./images/photo2.jpeg)
+
+![Tree body 2](./images/photo3.jpeg)
+
+![Tree body 1](./images/photo4.jpeg)
+
+![Tree root](./images/photo5.jpeg)
+
+<br>
+<br>
+
 ## Compile and run with Makefile
 If your operating system is **`Windows`**, you must have MinGW installed.
 If not, please install it.
