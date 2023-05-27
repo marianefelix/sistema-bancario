@@ -6,9 +6,9 @@ This system simulates a simple bank. The main purpose of this repository is to p
 ## Project informations
 - Workflow: **`GitFlow`**
 
-- We use a commit pattern that can be found here: **`https://www.conventionalcommits.org/en/v1.0.0/`**
+- We use a commit pattern that can be found here: [**Conventional Commits**](https://www.conventionalcommits.org/en/v1.0.0/)
 
-- Here is an image of the code tree below built by **GitKraken**:
+- Here is an image of the code tree built by **GitKraken**:
 
 <br>
 
