@@ -39,12 +39,13 @@ int NavigationMenu::getTypeAccount() {
 void NavigationMenu::showOptions() {
   cout << "---------- Menu ----------" << endl;
   cout << "1 - Criar conta" << endl;
-  cout << "2 - Consultar saldo" << endl;
-  cout << "3 - Creditar" << endl;
-  cout << "4 - Debitar" << endl;
-  cout << "5 - Realizar transferência" << endl;
-  cout << "6 - Render Juros" << endl;
-  cout << "7 - Sair" << endl;
+  cout << "2 - Consultar conta" << endl;
+  cout << "3 - Consultar saldo" << endl;
+  cout << "4 - Creditar" << endl;
+  cout << "5 - Debitar" << endl;
+  cout << "6 - Realizar transferência" << endl;
+  cout << "7 - Render Juros" << endl;
+  cout << "8 - Sair" << endl;
   cout << "---------------------------" << endl;
 }
 
@@ -54,21 +55,24 @@ void NavigationMenu::handleSelectedOption(Bank& bank, int selectedOption) {
       handleCreateAccount(bank);
       break;
     case 2:
-      handleGetBalance(bank);
+      handleConsultAccount(bank);
       break;
     case 3:
-      handleCredit(bank);
+      handleGetBalance(bank);
       break;
     case 4:
-      handleDebit(bank);
+      handleCredit(bank);
       break;
     case 5:
-      handleTransfer(bank);
+      handleDebit(bank);
       break;
     case 6:
-      handleInterestRate(bank);
+      handleTransfer(bank);
       break;
     case 7:
+      handleInterestRate(bank);
+      break;
+    case 8:
       cout << "Seção encerrada" << endl;
       break;
     default:
@@ -114,6 +118,25 @@ void NavigationMenu::handleCreateBonusAccount(Bank& bank) {
   int accountID = getAccountID();
   string response = bank.addBonusAccount(accountID);
   cout << response << endl;
+}
+
+void NavigationMenu::handleConsultAccount(Bank& bank) {
+  int accountID = getAccountID();
+  BankAccount* account = bank.getAccountByID(accountID);
+
+ if (account == nullptr) {
+    cout << "Essa conta não existe" << endl;
+  } else {
+    string accountType = bank.getAccountType(account);
+    cout << "Tipo: " << accountType << endl;
+    cout << "Número: " << accountID <<  endl;
+    cout << "Saldo: " << account->getBalance() << endl;
+
+    if (accountType == "Conta bônus") {
+      BonusAccount* bonusAccount = dynamic_cast<BonusAccount*>(account);
+      cout << "Bônus: " << bonusAccount->getScore() << endl;
+    }
+  }
 }
 
 void NavigationMenu::handleGetBalance(Bank& bank) {

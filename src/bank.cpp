@@ -16,6 +16,11 @@ Bank::~Bank() {
     }
 }
 
+template<typename Base, typename T>
+inline bool instanceof(const T *ptr) {
+   return dynamic_cast<const Base*>(ptr) != nullptr;
+}
+
 // Add an account to the bank
 string Bank::addAccount(int accountID, double openingBalance) {
     for (BankAccount* account : this->accounts) {
@@ -66,4 +71,16 @@ BankAccount* Bank::getAccountByID(int accountID) {
     }
 
     return nullptr;
+}
+
+std::string Bank::getAccountType(BankAccount* account) {
+    if (instanceof<GenericAccount>(account)) {
+        return "Conta simples";
+    }
+
+    if (instanceof<BonusAccount>(account)) {
+        return "Conta bônus";
+    }
+
+    return "Conta poupança";
 }
