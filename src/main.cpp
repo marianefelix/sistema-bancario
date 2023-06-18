@@ -14,7 +14,7 @@ int main() {
         navigationMenu.showOptions();
         std::cin >> selectedOption;
         navigationMenu.handleSelectedOption(bank, selectedOption);
-    } while (selectedOption < 7);
+    } while (selectedOption < 8);
 
     return 0;
 }

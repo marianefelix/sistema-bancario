@@ -19,6 +19,7 @@ class Bank {
         std::string addBonusAccount(int accountID);
 
         BankAccount* getAccountByID(int accountID);
+        std::string getAccountType(BankAccount* account);
 };
 
 #endif
