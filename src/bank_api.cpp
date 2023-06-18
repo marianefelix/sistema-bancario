@@ -11,6 +11,7 @@ void BankAPI::init(size_t thr) {
 }
 
 void BankAPI::start() {
+    cout << "Server is running on port 8080..." << endl;
     httpEndpoint->setHandler(router.handler());
     httpEndpoint->serve();
 }

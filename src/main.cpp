@@ -8,12 +8,13 @@ using namespace std;
 int main() {
     Address addr(Ipv4::any(), Port(8080));
     BankAPI api(addr);
-    
-    api.init();
-    api.start();
 
-    cout << "Server is running on port 8080..." << endl;
-    cin.ignore();
+    auto apiThread = [&api]() {
+        api.init();
+        api.start();
+    };
+
+    thread apiExecution(apiThread);
 
     NavigationMenu navigationMenu;
     Bank bank;
@@ -26,6 +27,7 @@ int main() {
     } while (selectedOption < 8);
 
     api.shutdown();
+    apiExecution.join();
 
     return 0;
 }
