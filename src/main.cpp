@@ -6,8 +6,8 @@
 using namespace std;
 
 int main() {
-    Address addr = new Address(Ipv4::any(), Port(8080));
-    BankAPI api = new BankAPI(addr);
+    Address addr(Ipv4::any(), Port(8080));
+    BankAPI api(addr);
     
     api.init();
     api.start();
