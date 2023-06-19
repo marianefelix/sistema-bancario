@@ -4,6 +4,7 @@
 #include <pistache/endpoint.h>
 #include <pistache/http.h>
 #include <pistache/router.h>
+#include "../headers/bank.h"
 
 using namespace Pistache;
 using namespace std;
@@ -17,6 +18,7 @@ class BankAPI {
     
     private:
         void setupRoutes();
+        void createAccount(const Rest::Request& request, Http::ResponseWriter response);
         Rest::Router router;
         shared_ptr<Http::Endpoint> httpEndpoint;
 };
