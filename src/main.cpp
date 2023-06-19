@@ -17,14 +17,14 @@ int main() {
     thread apiExecution(apiThread);
 
     NavigationMenu navigationMenu;
-    Bank bank;
-    int selectedOption = 0;
+    //Bank bank;
+    // int selectedOption = 0;
 
-    do {
-        navigationMenu.showOptions();
-        cin >> selectedOption;
-        navigationMenu.handleSelectedOption(bank, selectedOption);
-    } while (selectedOption < 8);
+    // do {
+    //     navigationMenu.showOptions();
+    //     cin >> selectedOption;
+    //     navigationMenu.handleSelectedOption(bank, selectedOption);
+    // } while (selectedOption < 8);
 
     api.shutdown();
     apiExecution.join();

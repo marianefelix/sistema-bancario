@@ -19,6 +19,7 @@ class BankAPI {
     private:
         void setupRoutes();
         void createAccount(const Rest::Request& request, Http::ResponseWriter response);
+        Bank bank;
         Rest::Router router;
         shared_ptr<Http::Endpoint> httpEndpoint;
 };

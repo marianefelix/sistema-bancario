@@ -26,7 +26,7 @@ void BankAPI::setupRoutes() {
     using namespace Rest;
 
     // Route to create an account
-    Routes::Post(router, "/accounts", Routes::bind(&BankAPI::createAccount, this));
+    Routes::Post(router, "/accounts/:accountID/:accountType/:accountOpeningBalance", Routes::bind(&BankAPI::createAccount, this));
 
     // // Route to consult an account
     // Routes::Post(router, "/accounts/:accountID", Routes::bind(&BankAPI::consultAccount, this));
@@ -50,25 +50,30 @@ void BankAPI::setupRoutes() {
 
 void BankAPI::createAccount(const Rest::Request& request, Http::ResponseWriter response) {
     int accountID = std::stoi(request.param(":accountID").as<std::string>());
-    //int accountType = std::stoi(request.param(":accountType").as<std::string>());
+    int accountType = std::stoi(request.param(":accountType").as<std::string>());
     int accountOpeningBalance = std::stoi(request.param(":accountOpeningBalance").as<std::string>());
-    std::string result = bank.addAccount(accountID, accountOpeningBalance);
+    std::string result;
     
-    // switch(typeAccount) {
-    // case 1:
-    //   result = Bank::addAccount(accountID, openingBalance);
-    //   break;
-    // case 2:
-    //   result = bank.addSavingsAccount(accountID, openingBalance);
-    //   break;
-    // case 3:
-    //   result = bank.addBonusAccount(accountID);
-    //   break;
-    // default:
-    //   break;
-    // }
+    switch(accountType) {
+    case 1:
+      result = bank.addAccount(accountID, accountOpeningBalance);
+      response.send(Http::Code::Ok, result);
+      break;
+    case 2:
+      result = bank.addSavingsAccount(accountID, accountOpeningBalance);
+      response.send(Http::Code::Ok, result);
+      break;
+    case 3:
+      result = bank.addBonusAccount(accountID);
+      response.send(Http::Code::Ok, result);
+      break;
+    default:
+      result = "Opção inválida";
+      response.send(Http::Code::Internal_Server_Error, result);
+      break;
+    }
     
-    response.send(Http::Code::Ok, result);
+    //response.send(Http::Code::Ok, result);
 }
 
 // void consultAccount(const Rest::Request& request, Http::ResponseWriter response) {
