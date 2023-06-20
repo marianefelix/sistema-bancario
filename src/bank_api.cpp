@@ -25,7 +25,7 @@ void BankAPI::setupRoutes() {
     using namespace Rest;
 
     // Route to create an account
-    Routes::Post(router, "/bank/account/:accountID/:accountType/:accountOpeningBalance", Routes::bind(&BankAPI::createAccount, this));
+    Routes::Post(router, "/bank/account", Routes::bind(&BankAPI::createAccount, this));
 
     // Route to consult an account
     Routes::Get(router, "/bank/account/:accountID", Routes::bind(&BankAPI::consultAccount, this));
@@ -48,9 +48,11 @@ void BankAPI::setupRoutes() {
 }
 
 void BankAPI::createAccount(const Rest::Request& request, Http::ResponseWriter response) {
-    int accountID = std::stoi(request.param(":accountID").as<std::string>());
-    int accountType = std::stoi(request.param(":accountType").as<std::string>());
-    int accountOpeningBalance = std::stoi(request.param(":accountOpeningBalance").as<std::string>());
+    json payload = json::parse(request.body());
+    
+    int accountType = payload["type"];
+    int accountID = payload["id"];
+    double accountOpeningBalance = payload["openingBalance"].get<double>();
     std::string result;
     
     switch(accountType) {
