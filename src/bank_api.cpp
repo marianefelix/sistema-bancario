@@ -25,25 +25,25 @@ void BankAPI::setupRoutes() {
     using namespace Rest;
 
     // Route to create an account
-    Routes::Post(router, "/accounts/:accountID/:accountType/:accountOpeningBalance", Routes::bind(&BankAPI::createAccount, this));
+    Routes::Post(router, "/bank/account/:accountID/:accountType/:accountOpeningBalance", Routes::bind(&BankAPI::createAccount, this));
 
     // Route to consult an account
-    Routes::Get(router, "/accounts/:accountID", Routes::bind(&BankAPI::consultAccount, this));
+    Routes::Get(router, "/bank/account/:accountID", Routes::bind(&BankAPI::consultAccount, this));
 
     // Route to consult the balance of an account
-    Routes::Get(router, "/accounts/:accountID/balance", Routes::bind(&BankAPI::consultAccountBalance, this));
+    Routes::Get(router, "/bank/account/:accountID/balance", Routes::bind(&BankAPI::consultAccountBalance, this));
 
     // Route to credit an account
-    Routes::Put(router, "/accounts/:accountID/credit", Routes::bind(&BankAPI::creditAccount, this));
+    Routes::Put(router, "/bank/account/:accountID/credit", Routes::bind(&BankAPI::creditAccount, this));
 
     // Route to debit an account
-    Routes::Put(router, "/accounts/:accountID/debit", Routes::bind(&BankAPI::debitAccount, this));
+    Routes::Put(router, "/bank/account/:accountID/debit", Routes::bind(&BankAPI::debitAccount, this));
 
     // Route to transfer between accounts
-    Routes::Put(router, "/accounts/transfer", Routes::bind(&BankAPI::transferBetweenAccounts, this));
+    Routes::Put(router, "/bank/account/transfer", Routes::bind(&BankAPI::transferBetweenAccounts, this));
 
     // // Route to apply income to an account
-    // Routes::Put(router, "/accounts/income", Routes::bind(&BankAPI::incomeAccount, this));
+    // Routes::Put(router, "/bank/account/income", Routes::bind(&BankAPI::incomeAccount, this));
 
 }
 
@@ -151,15 +151,5 @@ void BankAPI::transferBetweenAccounts(const Rest::Request& request, Http::Respon
 }
 
 // void BankAPI::incomeAccount(const Rest::Request& request, Http::ResponseWriter response) {
-//     int accountID = std::stoi(request.param(":accountID").as<std::string>());
-//     double value = std::stod(request.body());
-
-//     BankAccount* account = bank.getAccountByID(accountID);
-
-//     if(account == nullptr) {
-//         response.send(Http::Code::Not_Found, "Conta não encontrada");
-//     } else {
-//         account->debit(value);
-//         response.send(Http::Code::Ok, "Débito realizado com sucesso");
-//     }
+//     
 // }
