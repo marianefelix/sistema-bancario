@@ -36,8 +36,8 @@ void BankAPI::setupRoutes() {
     // Route to credit an account
     Routes::Put(router, "/accounts/:accountID/credit", Routes::bind(&BankAPI::creditAccount, this));
 
-    // // Route to debit an account
-    // Routes::Post(router, "/accounts/:accountID/debit", Routes::bind(&BankAPI::debitAccount, this));
+    // Route to debit an account
+    Routes::Put(router, "/accounts/:accountID/debit", Routes::bind(&BankAPI::debitAccount, this));
 
     // // Route to transfer between accounts
     // Routes::Post(router, "/accounts/:originAccountID/transfer/:destinationAccountID", Routes::bind(&BankAPI::transferBetweenAccounts, this));
@@ -121,19 +121,19 @@ void BankAPI::creditAccount(const Rest::Request& request, Http::ResponseWriter r
     }
 }
 
-// void debitAccount(const Rest::Request& request, Http::ResponseWriter response) {
-//     int accountID = std::stoi(request.param(":accountID").as<std::string>());
-//     double value = std::stod(request.body());
+void BankAPI::debitAccount(const Rest::Request& request, Http::ResponseWriter response) {
+    int accountID = std::stoi(request.param(":accountID").as<std::string>());
+    double value = std::stod(request.body());
 
-//     BankAccount account = bank.getAccountByID(accountID);
+    BankAccount* account = bank.getAccountByID(accountID);
 
-//     if(account.getAccountID() == -1) {
-//         response.send(Http::Code::NotFound, "Conta não encontrada");
-//     } else {
-//         account.debit(value);
-//         response.send(Http::Code::Ok, "Débito realizado com sucesso");
-//     }
-// }
+    if(account == nullptr) {
+        response.send(Http::Code::Not_Found, "Conta não encontrada");
+    } else {
+        account->debit(value);
+        response.send(Http::Code::Ok, "Débito realizado com sucesso");
+    }
+}
 
 // void transferBetweenAccounts(const Rest::Request& request, Http::ResponseWriter response) {
 //     int originAccountID = std::stoi(request.param(":originAccountID").as<std::string>());
