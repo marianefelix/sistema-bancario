@@ -27,6 +27,7 @@ class BankAPI {
         void createAccount(const Rest::Request& request, Http::ResponseWriter response);
         void consultAccount(const Rest::Request& request, Http::ResponseWriter response);
         void consultAccountBalance(const Rest::Request& request, Http::ResponseWriter response);
+        void creditAccount(const Rest::Request& request, Http::ResponseWriter response);
         Bank bank;
         Rest::Router router;
         shared_ptr<Http::Endpoint> httpEndpoint;
