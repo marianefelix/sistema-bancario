@@ -42,8 +42,8 @@ void BankAPI::setupRoutes() {
     // Route to transfer between accounts
     Routes::Put(router, "/bank/account/transfer", Routes::bind(&BankAPI::transferBetweenAccounts, this));
 
-    // // Route to apply income to an account
-    // Routes::Put(router, "/bank/account/income", Routes::bind(&BankAPI::incomeAccount, this));
+    // Route to apply income to an account
+    Routes::Put(router, "/bank/account/income", Routes::bind(&BankAPI::income, this));
 
 }
 
@@ -152,6 +152,20 @@ void BankAPI::transferBetweenAccounts(const Rest::Request& request, Http::Respon
     }
 }
 
-// void BankAPI::incomeAccount(const Rest::Request& request, Http::ResponseWriter response) {
-//     
-// }
+void BankAPI::income(const Rest::Request& request, Http::ResponseWriter response) {
+    double rate = std::stod(request.body());
+    std::vector<BankAccount*> allAccounts = bank.getAccounts();
+
+    try {
+        for(BankAccount* acc : allAccounts) {
+            string accountType = bank.getAccountType(acc);
+            if("Conta poupança" == accountType) { acc->applyInterestRate(rate); }
+        }
+
+        response.send(Http::Code::Ok, "Rendimento aplicado com sucesso");
+    } catch(const std::exception& ex) {
+        string errorMessage = ex.what(); // in case we need it later
+        response.send(Http::Code::Internal_Server_Error, "Erro ao aplicar rendimento");
+    }
+    
+}
