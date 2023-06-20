@@ -47,6 +47,7 @@ void BankAPI::setupRoutes() {
 
 }
 
+// TODO: enhance logic to remove code repetitions
 void BankAPI::createAccount(const Rest::Request& request, Http::ResponseWriter response) {
     json payload = json::parse(request.body());
     
@@ -57,24 +58,23 @@ void BankAPI::createAccount(const Rest::Request& request, Http::ResponseWriter r
     
     switch(accountType) {
     case 1:
-      result = bank.addAccount(accountID, accountOpeningBalance);
-      response.send(Http::Code::Ok, result);
+        result = bank.addAccount(accountID, accountOpeningBalance);
+        "Essa conta já existe." == result ? response.send(Http::Code::Bad_Request, result) : response.send(Http::Code::Ok, result);
       break;
     case 2:
-      result = bank.addSavingsAccount(accountID, accountOpeningBalance);
-      response.send(Http::Code::Ok, result);
+        result = bank.addSavingsAccount(accountID, accountOpeningBalance);
+        "Essa conta já existe." == result ? response.send(Http::Code::Bad_Request, result) : response.send(Http::Code::Ok, result);
       break;
     case 3:
-      result = bank.addBonusAccount(accountID);
-      response.send(Http::Code::Ok, result);
+        result = bank.addBonusAccount(accountID);
+        "Essa conta já existe." == result ? response.send(Http::Code::Bad_Request, result) : response.send(Http::Code::Ok, result);
       break;
     default:
       result = "Opção inválida";
-      response.send(Http::Code::Internal_Server_Error, result);
+      response.send(Http::Code::Bad_Request, result);
       break;
     }
-    
-    //response.send(Http::Code::Ok, result);
+
 }
 
 void BankAPI::consultAccount(const Rest::Request& request, Http::ResponseWriter response) {
