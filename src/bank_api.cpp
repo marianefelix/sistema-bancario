@@ -1,7 +1,6 @@
 #include "../headers/bank_api.h"
 
 using namespace Pistache;
-//using json = nlohmann::json;
 
 
 BankAPI::BankAPI(Address addr) : httpEndpoint(std::make_shared<Http::Endpoint>(addr)) {}
@@ -28,8 +27,8 @@ void BankAPI::setupRoutes() {
     // Route to create an account
     Routes::Post(router, "/accounts/:accountID/:accountType/:accountOpeningBalance", Routes::bind(&BankAPI::createAccount, this));
 
-    // // Route to consult an account
-    // Routes::Post(router, "/accounts/:accountID", Routes::bind(&BankAPI::consultAccount, this));
+    // Route to consult an account
+    Routes::Get(router, "/accounts/:accountID", Routes::bind(&BankAPI::consultAccount, this));
 
     // // Route to consult the balance of an account
     // Routes::Get(router, "/accounts/:accountID/balance", Routes::bind(&BankAPI::getAccountBalance, this));
@@ -76,17 +75,23 @@ void BankAPI::createAccount(const Rest::Request& request, Http::ResponseWriter r
     //response.send(Http::Code::Ok, result);
 }
 
-// void consultAccount(const Rest::Request& request, Http::ResponseWriter response) {
-//     int accountID = std::stoi(request.param(":accountID").as<std::string>());
-//     BankAccount account = bank.getAccountByID(accountID);
-//     if (account.getAccountID() == -1) {
-//         response.send(Http::Code::NotFound, "Conta não encontrada");
-//     } else {
-//         json account;
-//         account["balance"] = account.getBalance();
-//         response.send(Http::Code::Ok, accountBalance.dump());
-//     }
-// }
+void BankAPI::consultAccount(const Rest::Request& request, Http::ResponseWriter response) {
+    int accountID = std::stoi(request.param(":accountID").as<std::string>());
+    BankAccount* account = bank.getAccountByID(accountID);
+    //int accountType = bank.getAccountTypeInt();
+
+
+    if(account == nullptr) {
+        response.send(Http::Code::Not_Found, "Conta não encontrada");
+    } else {
+        json accountJson;
+        accountJson["id"] = account->getAccountID();
+        accountJson["type"] = bank.getAccountType(account);
+        accountJson["balance"] = account->getBalance();
+        response.headers().add<Http::Header::ContentType>(MIME(Application, Json));
+        response.send(Http::Code::Ok, accountJson.dump());
+    }
+}
 
 // void getAccountBalance(const Rest::Request& request, Http::ResponseWriter response) {
 //     int accountID = std::stoi(request.param(":accountID").as<std::string>());
