@@ -39,8 +39,8 @@ void BankAPI::setupRoutes() {
     // Route to debit an account
     Routes::Put(router, "/accounts/:accountID/debit", Routes::bind(&BankAPI::debitAccount, this));
 
-    // // Route to transfer between accounts
-    // Routes::Post(router, "/accounts/:originAccountID/transfer/:destinationAccountID", Routes::bind(&BankAPI::transferBetweenAccounts, this));
+    // Route to transfer between accounts
+    Routes::Put(router, "/accounts/:originAccountID/transfer/:destinationAccountID", Routes::bind(&BankAPI::transferBetweenAccounts, this));
 
     // // Route to apply interest rate to an account
     // Routes::Post(router, "/accounts/:accountID/debit", Routes::bind(&BankAPI::debitAccount, this));
@@ -135,18 +135,23 @@ void BankAPI::debitAccount(const Rest::Request& request, Http::ResponseWriter re
     }
 }
 
-// void transferBetweenAccounts(const Rest::Request& request, Http::ResponseWriter response) {
-//     int originAccountID = std::stoi(request.param(":originAccountID").as<std::string>());
-//     int destinationAccountID = std::stoi(request.param(":destinationAccountID").as<std::string>());
-//     double value = std::stod(request.body());
+void BankAPI::transferBetweenAccounts(const Rest::Request& request, Http::ResponseWriter response) {
+    int originAccountID = std::stoi(request.param(":originAccountID").as<std::string>());
+    int destinationAccountID = std::stoi(request.param(":destinationAccountID").as<std::string>());
+    double value = std::stod(request.body());
 
-//     BankAccount originAccount = bank.getAccountByID(originAccountID);
-//     BankAccount destinationAccount = bank.getAccountByID(destinationAccountID);
+    BankAccount* originAccount = bank.getAccountByID(originAccountID);
+    BankAccount* destinationAccount = bank.getAccountByID(destinationAccountID);
 
-//     if(originAccount.getAccountID() == -1 || destinationAccount.getAccountID() == -1) {
-//         response.send(Http::Code::NotFound, "Conta(s) não encontrada(s)");
-//     } else {
-//         originAccount.transfer(destinationAccount, value);
-//         response.send(Http::Code::Ok, "Transferência realizada com sucesso");
-//     }
-// }
+    if(originAccount == nullptr || destinationAccount == nullptr) {
+        response.send(Http::Code::Not_Found, "Conta(s) não encontrada(s)");
+    } else {
+        originAccount->transfer(*destinationAccount, value);
+        json accountJson;
+        accountJson["from"] = originAccount->getAccountID();
+        accountJson["to"] = destinationAccount->getAccountID();
+        accountJson["amount"] = value;
+        response.headers().add<Http::Header::ContentType>(MIME(Application, Json));
+        response.send(Http::Code::Ok, accountJson.dump());
+    }
+}
