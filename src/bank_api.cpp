@@ -30,8 +30,8 @@ void BankAPI::setupRoutes() {
     // Route to consult an account
     Routes::Get(router, "/accounts/:accountID", Routes::bind(&BankAPI::consultAccount, this));
 
-    // // Route to consult the balance of an account
-    // Routes::Get(router, "/accounts/:accountID/balance", Routes::bind(&BankAPI::getAccountBalance, this));
+    // Route to consult the balance of an account
+    Routes::Get(router, "/accounts/:accountID/balance", Routes::bind(&BankAPI::consultAccountBalance, this));
 
     // // Route to credit an account
     // Routes::Post(router, "/accounts/:accountID/credit", Routes::bind(&BankAPI::creditAccount, this));
@@ -93,19 +93,19 @@ void BankAPI::consultAccount(const Rest::Request& request, Http::ResponseWriter 
     }
 }
 
-// void getAccountBalance(const Rest::Request& request, Http::ResponseWriter response) {
-//     int accountID = std::stoi(request.param(":accountID").as<std::string>());
-    
-//     BankAccount account = bank.getAccountByID(accountID);
-    
-//     if(account.getAccountID() == -1) {
-//         response.send(Http::Code::NotFound, "Conta não encontrada");
-//     } else {
-//         json accountBalance;
-//         accountBalance["balance"] = account.getBalance();
-//         response.send(Http::Code::Ok, accountBalance.dump());
-//     }
-// }
+void BankAPI::consultAccountBalance(const Rest::Request& request, Http::ResponseWriter response) {
+    int accountID = std::stoi(request.param(":accountID").as<std::string>());
+    BankAccount* account = bank.getAccountByID(accountID);
+
+    if(account == nullptr) {
+        response.send(Http::Code::Not_Found, "Conta não encontrada");
+    } else {
+        json accountJson;
+        accountJson["balance"] = account->getBalance();
+        response.headers().add<Http::Header::ContentType>(MIME(Application, Json));
+        response.send(Http::Code::Ok, accountJson.dump());
+    }
+}
 
 // void creditAccount(const Rest::Request& request, Http::ResponseWriter response) {
 //     int accountID = std::stoi(request.param(":accountID").as<std::string>());
