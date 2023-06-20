@@ -40,10 +40,10 @@ void BankAPI::setupRoutes() {
     Routes::Put(router, "/accounts/:accountID/debit", Routes::bind(&BankAPI::debitAccount, this));
 
     // Route to transfer between accounts
-    Routes::Put(router, "/accounts/:originAccountID/transfer/:destinationAccountID", Routes::bind(&BankAPI::transferBetweenAccounts, this));
+    Routes::Put(router, "/accounts/transfer", Routes::bind(&BankAPI::transferBetweenAccounts, this));
 
-    // // Route to apply interest rate to an account
-    // Routes::Post(router, "/accounts/:accountID/debit", Routes::bind(&BankAPI::debitAccount, this));
+    // // Route to apply income to an account
+    // Routes::Put(router, "/accounts/income", Routes::bind(&BankAPI::incomeAccount, this));
 
 }
 
@@ -136,22 +136,30 @@ void BankAPI::debitAccount(const Rest::Request& request, Http::ResponseWriter re
 }
 
 void BankAPI::transferBetweenAccounts(const Rest::Request& request, Http::ResponseWriter response) {
-    int originAccountID = std::stoi(request.param(":originAccountID").as<std::string>());
-    int destinationAccountID = std::stoi(request.param(":destinationAccountID").as<std::string>());
-    double value = std::stod(request.body());
+    json payload = json::parse(request.body());
 
-    BankAccount* originAccount = bank.getAccountByID(originAccountID);
-    BankAccount* destinationAccount = bank.getAccountByID(destinationAccountID);
+    BankAccount* originAccount = bank.getAccountByID(payload["from"]);
+    BankAccount* destinationAccount = bank.getAccountByID(payload["to"]);
+    double amount = payload["amount"].get<double>();
 
     if(originAccount == nullptr || destinationAccount == nullptr) {
         response.send(Http::Code::Not_Found, "Conta(s) não encontrada(s)");
     } else {
-        originAccount->transfer(*destinationAccount, value);
-        json accountJson;
-        accountJson["from"] = originAccount->getAccountID();
-        accountJson["to"] = destinationAccount->getAccountID();
-        accountJson["amount"] = value;
-        response.headers().add<Http::Header::ContentType>(MIME(Application, Json));
-        response.send(Http::Code::Ok, accountJson.dump());
+        originAccount->transfer(*destinationAccount, amount);
+        response.send(Http::Code::Ok, "Transferência realizada com sucesso");
     }
 }
+
+// void BankAPI::incomeAccount(const Rest::Request& request, Http::ResponseWriter response) {
+//     int accountID = std::stoi(request.param(":accountID").as<std::string>());
+//     double value = std::stod(request.body());
+
+//     BankAccount* account = bank.getAccountByID(accountID);
+
+//     if(account == nullptr) {
+//         response.send(Http::Code::Not_Found, "Conta não encontrada");
+//     } else {
+//         account->debit(value);
+//         response.send(Http::Code::Ok, "Débito realizado com sucesso");
+//     }
+// }

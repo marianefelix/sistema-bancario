@@ -30,6 +30,7 @@ class BankAPI {
         void creditAccount(const Rest::Request& request, Http::ResponseWriter response);
         void debitAccount(const Rest::Request& request, Http::ResponseWriter response);
         void transferBetweenAccounts(const Rest::Request& request, Http::ResponseWriter response);
+        //void incomeAccount(const Rest::Request& request, Http::ResponseWriter response);
         Bank bank;
         Rest::Router router;
         shared_ptr<Http::Endpoint> httpEndpoint;
