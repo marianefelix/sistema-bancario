@@ -128,13 +128,12 @@ void NavigationMenu::handleConsultAccount(Bank& bank) {
     cout << "Essa conta não existe" << endl;
   } else {
     string accountType = bank.getAccountType(account);
-    cout << "Tipo: " << accountType << endl;
-    cout << "Número: " << accountID <<  endl;
-    cout << "Saldo: " << account->getBalance() << endl;
+    string result = account->consultAccount(accountType);
 
     if (accountType == "Conta bônus") {
       BonusAccount* bonusAccount = dynamic_cast<BonusAccount*>(account);
-      cout << "Bônus: " << bonusAccount->getScore() << endl;
+      result = result + "  |  Bônus: " + to_string(bonusAccount->getScore());
+      cout << result << endl;
     }
   }
 }
@@ -164,21 +163,18 @@ void NavigationMenu::handleCredit(Bank& bank) {
 
   if (account == nullptr) {
       cout << "Essa conta não existe" << endl;
-  } else if (value < 0) {
-      cout << "Digite um valor maior ou igual a 0." << endl;
   } else {
-      account->credit(value);
-      double accountBalance = account->getBalance();
-      cout << "Seu novo saldo é: " << accountBalance <<  endl;
-      
-      if(bonusAccount != nullptr) {
-        int bonusValue = bonusAccount->getScore();
-        bonusAccount->addBonusCredit(value);
-        bonusValue = bonusAccount->getScore() - bonusValue;
-        if(bonusValue > 0) {
-          cout << "Seu bonus aumentou " << bonusValue << " ponto(s)! Seu bonus agora é: " << bonusAccount->getScore() << endl;
-        }
+    string result = account->credit(value);
+    cout << result << endl;
+
+    if(bonusAccount != nullptr) {
+      int bonusValue = bonusAccount->getScore();
+      bonusAccount->addBonusCredit(value);
+      bonusValue = bonusAccount->getScore() - bonusValue;
+      if(bonusValue > 0) {
+        cout << "Seu bonus aumentou " << bonusValue << " ponto(s)! Seu bonus agora é: " << bonusAccount->getScore() << endl;
       }
+    }
   }
 }
 
@@ -190,14 +186,12 @@ void NavigationMenu::handleDebit(Bank& bank) {
   cin >> value;
 
   BankAccount* account = bank.getAccountByID(accountID);
+
   if (account == nullptr) {
       cout << "Essa conta não existe" << endl;
-  } else if (value < 0) {
-      cout << "Digite um valor maior ou igual a 0." << endl;
   } else {
-      account->debit(value);
-      double accountBalance = account->getBalance();
-      cout << "Seu novo saldo é: " << accountBalance <<  endl;
+      string result = account->debit(value);
+      cout << result << endl;
   }
 }
   
@@ -221,13 +215,10 @@ void NavigationMenu::handleTransfer(Bank& bank) {
 
   if (originAccount == nullptr || destinationAccount == nullptr) {
       cout << "Erro ao encontrar contas. Por favor, insira um número válido." << endl;
-  } else if (value < 0) {
-      cout << "Digite um valor maior ou igual a 0." << endl;
   } else {
-      originAccount->transfer(*destinationAccount, value);
-      double accountBalance = originAccount->getBalance();
-      cout << "Seu novo saldo é: " << accountBalance << endl;
-      
+      string result = originAccount->transfer(*destinationAccount, value);
+      cout << result << endl;
+
       if(bonusAccount != nullptr) {
         int bonusValue = bonusAccount->getScore();
         bonusAccount->addBonusTransfer(value);

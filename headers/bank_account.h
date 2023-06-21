@@ -22,11 +22,13 @@ class BankAccount {
 
         void setBalance(double value);
 
-        void credit(double value);
+        std::string consultAccount(std::string type);
 
-        virtual void debit(double value);
+        std::string credit(double value);
 
-        virtual void transfer(BankAccount& destination, double value);
+        virtual std::string debit(double value);
+
+        virtual std::string transfer(BankAccount& destination, double value);
 };
 
 #endif
