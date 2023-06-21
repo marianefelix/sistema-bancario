@@ -31,24 +31,28 @@ std::string BankAccount::credit(double value) {
     if (value >= 0) {
         this->balance = this->balance + value;
         string success = "Seu novo saldo é: " + to_string(this->balance);
+
         return success;
     }
+
     return "Digite um valor maior ou igual a 0.";
 }
 
 std::string BankAccount::debit(double value) {
     if(value >= 0) {
         double newBalance = this->balance - value;
+        string message = "";
 
         if (newBalance >= 0) {
             this->balance = newBalance;
-            string success = "Seu novo saldo é: " + to_string(this->balance);
-            return success;
-        }else{
-            string success = "Não há saldo suficiente para debitar.";
-            return success;
+            message = "Seu novo saldo é: " + to_string(this->balance);
+        } else {
+            message = "Não há saldo suficiente para debitar.";
         }
+
+        return message;
     }
+
     return "Digite um valor maior ou igual a 0.";
 }
 
@@ -58,11 +62,12 @@ std::string BankAccount::transfer(BankAccount& destination, double value) {
     if (newBalance >= 0 && value >= 0) {
         this->debit(value);
         destination.credit(value);
-        string success = "Seu novo saldo é: " + to_string(this->balance);
+        string success = "Transferência realizada com sucesso!\n Seu novo saldo é: " + to_string(this->balance);
+
         return success;
     }
 
-    if(newBalance < 0){
+    if (newBalance < 0){
         return "Não há saldo suficiente para transferir.";
     }
     

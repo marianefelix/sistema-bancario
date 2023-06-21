@@ -51,22 +51,22 @@ void NavigationMenu::handleSelectedOption(int selectedOption) {
       handleCreateAccount();
       break;
     case 2:
-      // handleConsultAccount();
+      handleConsultAccount();
       break;
     case 3:
-      // handleGetBalance();
+      handleGetBalance();
       break;
     case 4:
-      // handleCredit();
+      handleCredit();
       break;
     case 5:
-      // handleDebit();
+      handleDebit();
       break;
     case 6:
-      // handleTransfer();
+      handleTransfer();
       break;
     case 7:
-      // handleInterestRate();
+      handleInterestRate();
       break;
     case 8:
       cout << "Seção encerrada" << endl;
@@ -110,6 +110,160 @@ void NavigationMenu::handleCreateAccount() {
 
   auto response = client.post("http://localhost:8080/bank/account")
     .body(accountData.dump())
+    .send();
+
+  response.then(
+    [&](Http::Response res) {
+      if (res.code() == Http::Code::Ok) {
+        cout << res.body() << endl;
+      } else {
+        cout << "Erro: " << res.body() << endl;
+      }
+    },
+    Async::Throw
+  );
+}
+
+void NavigationMenu::handleConsultAccount() {
+  int accountID = getAccountID();
+
+  auto response = client
+  .get("http://localhost:8080/bank/account/" + to_string(accountID))
+  .send();
+
+  response.then(
+    [&](Http::Response res) {
+      if (res.code() == Http::Code::Ok) {
+        cout << "Erro: " << res.body() << endl;
+      } else {
+        cout << "Erro: " << res.body() << endl;
+      }
+    },
+    Async::Throw
+  );
+}
+
+void NavigationMenu::handleGetBalance() {
+  int accountID = getAccountID();
+
+  auto response = client
+  .get("http://localhost:8080/bank/account/" + to_string(accountID) + "/balance")
+  .send();
+
+  response.then(
+    [&](Http::Response res) {
+      if (res.code() == Http::Code::Ok) {
+        json responseBody = json::parse(res.body());
+        double accountBalance = responseBody["balance"];
+        
+        cout << "O saldo da sua conta é: " << accountBalance <<  endl;
+      } else {
+        cout << "Erro: " << res.body() << endl;
+      }
+    },
+    Async::Throw
+  );
+}
+
+void NavigationMenu::handleCredit() {
+  int accountID = getAccountID();
+  double value;
+
+  cout << "Digite o valor a ser creditado: " << endl;
+  cin >> value;
+
+  json data;
+  data["credit"] = value;
+
+
+  auto response = client.put("http://localhost:8080/bank/account" + to_string(accountID) + "/credit")
+    .body(data.dump())
+    .send();
+
+  response.then(
+    [&](Http::Response res) {
+      if (res.code() == Http::Code::Ok) {
+        cout << res.body() << endl;
+      } else {
+        cout << "Erro: " << res.body() << endl;
+      }
+    },
+    Async::Throw
+  );
+}
+
+void NavigationMenu::handleDebit() {
+  int accountID = getAccountID();
+  double value;
+
+  cout << "Digite o valor a ser debitado: " << endl;
+  cin >> value;
+
+  json data;
+  data["debit"] = value;
+
+  auto response = client.put("http://localhost:8080/bank/account" + to_string(accountID) + "/debit")
+    .body(data.dump())
+    .send();
+
+  response.then(
+    [&](Http::Response res) {
+      if (res.code() == Http::Code::Ok) {
+        cout << res.body() << endl;
+      } else {
+        cout << "Erro: " << res.body() << endl;
+      }
+    },
+    Async::Throw
+  );
+}
+
+void NavigationMenu::handleTransfer() {
+  int originAccountID, destinationAccountID;
+  double value;
+
+  cout << "Digite o número da conta de origem: " << endl;
+  cin >> originAccountID;
+
+  cout << "Digite o número da conta de destino: " << endl;
+  cin >> destinationAccountID;
+
+  cout << "Digite o valor a ser transferido: " << endl;
+  cin >> value;
+
+  json transferData;
+  transferData["from"] = originAccountID;
+  transferData["to"] = destinationAccountID;
+  transferData["amount"] = value;
+
+  auto response = client.put("http://localhost:8080/bank/account/transfer")
+    .body(transferData.dump())
+    .send();
+
+  response.then(
+    [&](Http::Response res) {
+      if (res.code() == Http::Code::Ok) {
+        cout << res.body() << endl;
+      } else {
+        cout << "Erro: " << res.body() << endl;
+      }
+    },
+    Async::Throw
+  );
+}
+
+void NavigationMenu::handleInterestRate() {
+  int accountID = getAccountID();
+  double rate;
+
+  cout << "Informe a taxa de juros:" << endl;
+  cin >> rate;
+
+  json data;
+  data["rate"] = rate;
+
+  auto response = client.put("http://localhost:8080/bank/income")
+    .body(data.dump())
     .send();
 
   response.then(

@@ -21,6 +21,10 @@ void BankAPI::shutdown() {
     httpEndpoint->shutdown();
 }
 
+bool contains(string str, string subString) {
+   return str.find(substr) != std::string::npos
+}
+
 void BankAPI::setupRoutes() {
     using namespace Rest;
 
@@ -60,7 +64,7 @@ void BankAPI::createAccount(const Rest::Request& request, Http::ResponseWriter r
     } else if((!payload.contains("openingBalance")) && (payload["type"] == 1 || payload["type"] == 2)) {
         response.send(Http::Code::Bad_Request, "Necessário informar saldo inicial");
         return;
-    } 
+    }
 
     int accountID = payload["id"].get<int>();
     int accountType = payload["type"].get<int>();
@@ -92,17 +96,13 @@ void BankAPI::createAccount(const Rest::Request& request, Http::ResponseWriter r
 
 void BankAPI::consultAccount(const Rest::Request& request, Http::ResponseWriter response) {
     int accountID = std::stoi(request.param(":accountID").as<std::string>());
-    BankAccount* account = bank.getAccountByID(accountID);
 
-    if(account == nullptr) {
+    string result = bank.consultAccount(accountID);
+
+    if (contains(result, "não existe")) {
         response.send(Http::Code::Not_Found, "Conta não encontrada");
     } else {
-        json accountJson;
-        accountJson["id"] = account->getAccountID();
-        accountJson["type"] = bank.getAccountType(account);
-        accountJson["balance"] = account->getBalance();
-        response.headers().add<Http::Header::ContentType>(MIME(Application, Json));
-        response.send(Http::Code::Ok, accountJson.dump());
+        response.send(Http::Code::Ok, result);
     }
 }
 
@@ -124,20 +124,25 @@ void BankAPI::creditAccount(const Rest::Request& request, Http::ResponseWriter r
     int accountID = std::stoi(request.param(":accountID").as<std::string>());
     json payload = json::parse(request.body());
 
-    if(!payload.contains("credit")) {
+    if (!payload.contains("credit")) {
         response.send(Http::Code::Bad_Request, "Necessário informar valor a ser creditado");
         return;
     }
 
+    BankAccount* account = bank.getAccountByID(accountID);
     double value = payload["credit"].get<double>();
 
-    BankAccount* account = bank.getAccountByID(accountID);
-
-    if(account == nullptr) {
+    if (account == nullptr) {
         response.send(Http::Code::Not_Found, "Conta não encontrada");
+        return;
+    }
+
+    string result = account->credit(value);
+    
+    if (contains(result, "novo saldo")) {
+        response.send(Http::Code::Ok, result);
     } else {
-        account->credit(value);
-        response.send(Http::Code::Ok, "Crédito realizado com sucesso");
+        response.send(Http::Code::Bad_Request, result);
     }
 }
 
@@ -151,14 +156,19 @@ void BankAPI::debitAccount(const Rest::Request& request, Http::ResponseWriter re
     }
 
     double value = payload["debit"].get<double>();
-
     BankAccount* account = bank.getAccountByID(accountID);
 
-    if(account == nullptr) {
+    if (account == nullptr) {
         response.send(Http::Code::Not_Found, "Conta não encontrada");
+        return;
+    }
+    
+    string result = account->debit(value);
+    
+    if (contains(result, "novo saldo")) {
+        response.send(Http::Code::Ok, result);
     } else {
-        account->debit(value);
-        response.send(Http::Code::Ok, "Débito realizado com sucesso");
+        response.send(Http::Code::Bad_Request, result);
     }
 }
 
@@ -169,11 +179,17 @@ void BankAPI::transferBetweenAccounts(const Rest::Request& request, Http::Respon
     BankAccount* destinationAccount = bank.getAccountByID(payload["to"]);
     double amount = payload["amount"].get<double>();
 
-    if(originAccount == nullptr || destinationAccount == nullptr) {
+    if (originAccount == nullptr || destinationAccount == nullptr) {
         response.send(Http::Code::Not_Found, "Conta(s) não encontrada(s)");
+        return;
+    }
+
+    string result = originAccount->transfer(*destinationAccount, amount);
+
+    if (contains(result, "novo saldo")) {
+        response.send(Http::Code::Ok, result);
     } else {
-        originAccount->transfer(*destinationAccount, amount);
-        response.send(Http::Code::Ok, "Transferência realizada com sucesso");
+        response.send(Http::Code::Bad_Request, result);
     }
 }
 
@@ -200,5 +216,4 @@ void BankAPI::income(const Rest::Request& request, Http::ResponseWriter response
         string errorMessage = ex.what(); // in case we need it later
         response.send(Http::Code::Internal_Server_Error, "Erro ao aplicar rendimento");
     }
-    
 }

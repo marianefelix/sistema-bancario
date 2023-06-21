@@ -22,12 +22,11 @@ class NavigationMenu {
         ~NavigationMenu(); //destructor
 
         void showOptions();
-
         void handleSelectedOption(int selectedOption);
-
         void handleCreateAccount();
-
         double handleOpeningBalance();
+        void handleTransfer();
+        void handleInterestRate();
 };
 
 #endif
