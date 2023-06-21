@@ -122,33 +122,16 @@ void NavigationMenu::handleCreateBonusAccount(Bank& bank) {
 
 void NavigationMenu::handleConsultAccount(Bank& bank) {
   int accountID = getAccountID();
-  BankAccount* account = bank.getAccountByID(accountID);
 
- if (account == nullptr) {
-    cout << "Essa conta não existe" << endl;
-  } else {
-    string accountType = bank.getAccountType(account);
-    cout << "Tipo: " << accountType << endl;
-    cout << "Número: " << accountID <<  endl;
-    cout << "Saldo: " << account->getBalance() << endl;
-
-    if (accountType == "Conta bônus") {
-      BonusAccount* bonusAccount = dynamic_cast<BonusAccount*>(account);
-      cout << "Bônus: " << bonusAccount->getScore() << endl;
-    }
-  }
+  string result = bank.consultAccount(accountID);
+  cout << result << endl;
 }
 
 void NavigationMenu::handleGetBalance(Bank& bank) {
   int accountID = getAccountID();
-  BankAccount* account = bank.getAccountByID(accountID);
 
-  if (account == nullptr) {
-      cout << "Essa conta não existe" << endl;
-  } else {
-      double accountBalance = account->getBalance();
-      cout << "O saldo da sua conta é: " << accountBalance <<  endl;
-  }
+  string result = bank.consultAccountBalance(accountID);
+  cout << result << endl;
 }
 
 void NavigationMenu::handleCredit(Bank& bank) {
@@ -160,25 +143,11 @@ void NavigationMenu::handleCredit(Bank& bank) {
 
   BankAccount* account = bank.getAccountByID(accountID);
 
-  BonusAccount* bonusAccount = dynamic_cast<BonusAccount*>(account);
-
   if (account == nullptr) {
       cout << "Essa conta não existe" << endl;
-  } else if (value < 0) {
-      cout << "Digite um valor maior ou igual a 0." << endl;
   } else {
-      account->credit(value);
-      double accountBalance = account->getBalance();
-      cout << "Seu novo saldo é: " << accountBalance <<  endl;
-      
-      if(bonusAccount != nullptr) {
-        int bonusValue = bonusAccount->getScore();
-        bonusAccount->addBonusCredit(value);
-        bonusValue = bonusAccount->getScore() - bonusValue;
-        if(bonusValue > 0) {
-          cout << "Seu bonus aumentou " << bonusValue << " ponto(s)! Seu bonus agora é: " << bonusAccount->getScore() << endl;
-        }
-      }
+    string result = account->credit(value);
+    cout << result << endl;
   }
 }
 
@@ -190,14 +159,12 @@ void NavigationMenu::handleDebit(Bank& bank) {
   cin >> value;
 
   BankAccount* account = bank.getAccountByID(accountID);
+
   if (account == nullptr) {
       cout << "Essa conta não existe" << endl;
-  } else if (value < 0) {
-      cout << "Digite um valor maior ou igual a 0." << endl;
   } else {
-      account->debit(value);
-      double accountBalance = account->getBalance();
-      cout << "Seu novo saldo é: " << accountBalance <<  endl;
+      string result = account->debit(value);
+      cout << result << endl;
   }
 }
   
@@ -217,25 +184,11 @@ void NavigationMenu::handleTransfer(Bank& bank) {
   BankAccount* originAccount = bank.getAccountByID(originAccountID);
   BankAccount* destinationAccount = bank.getAccountByID(destinationAccountID);
 
-  BonusAccount* bonusAccount = dynamic_cast<BonusAccount*>(destinationAccount);
-
   if (originAccount == nullptr || destinationAccount == nullptr) {
       cout << "Erro ao encontrar contas. Por favor, insira um número válido." << endl;
-  } else if (value < 0) {
-      cout << "Digite um valor maior ou igual a 0." << endl;
   } else {
-      originAccount->transfer(*destinationAccount, value);
-      double accountBalance = originAccount->getBalance();
-      cout << "Seu novo saldo é: " << accountBalance << endl;
-      
-      if(bonusAccount != nullptr) {
-        int bonusValue = bonusAccount->getScore();
-        bonusAccount->addBonusTransfer(value);
-        bonusValue = bonusAccount->getScore() - bonusValue;
-        if(bonusValue > 0) {
-          cout << "O bonus da conta de destino aumentou " << bonusValue << " ponto(s)! Seu bonus agora é: " << bonusAccount->getScore() << endl;
-        }
-      }
+      string result = originAccount->transfer(*destinationAccount, value);
+      cout << result << endl;
   }
 }
 
@@ -253,9 +206,9 @@ void NavigationMenu::handleInterestRate(Bank& bank) {
     cout << "Informe a taxa de juros:" << endl;
     cin >> interestRate;
 
-    savingsAccount->applyInterestRate(interestRate);
+    string result = savingsAccount->applyInterestRate(interestRate);
 
-    cout << "Saldo atualizado: " << savingsAccount->getBalance() << endl;
+    cout << result << endl;
   }
 }
 

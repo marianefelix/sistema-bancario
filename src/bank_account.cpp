@@ -1,5 +1,11 @@
 #include <iostream>
+#include <sstream>
 #include "../headers/bank_account.h"
+#include "../headers/bank.h"
+#include "../headers/savings_account.h"
+#include "../headers/navigation_menu.h"
+#include "../headers/savings_account.h"
+#include "../headers/bonus_account.h"
 using namespace std;
 
 BankAccount::BankAccount(int id, double initialBalance) {
@@ -21,23 +27,44 @@ void BankAccount::setBalance(double value) {
     this->balance = value;
 }
 
-void BankAccount::credit(double value) {
-    this->balance = this->balance + value;
-}
-
-void BankAccount::debit(double value) {
-    double newBalance = this->balance - value;
-
-    if (newBalance >= -1000) {
-        this->balance = newBalance;
+std::string BankAccount::credit(double value) {
+    if (value >= 0) {
+        this->balance = this->balance + value;
+        string success = "Seu novo saldo é: " + to_string(this->balance);
+        return success;
     }
+    return "Digite um valor maior ou igual a 0.";
 }
 
-void BankAccount::transfer(BankAccount& destination, double value) {
+std::string BankAccount::debit(double value) {
+    if(value >= 0) {
+        double newBalance = this->balance - value;
+
+        if (newBalance >= 0) {
+            this->balance = newBalance;
+            string success = "Seu novo saldo é: " + to_string(this->balance);
+            return success;
+        }else{
+            string success = "Não há saldo suficiente para debitar.";
+            return success;
+        }
+    }
+    return "Digite um valor maior ou igual a 0.";
+}
+
+std::string BankAccount::transfer(BankAccount& destination, double value) {
     double newBalance = this->balance - value;
 
-    if (newBalance >= -1000) {
+    if (newBalance >= 0 && value >= 0) {
         this->debit(value);
         destination.credit(value);
+        string success = "Seu novo saldo é: " + to_string(this->balance);
+        return success;
     }
+
+    if(newBalance < 0){
+        return "Não há saldo suficiente para transferir.";
+    }
+    
+    return "Digite um valor maior ou igual a 0.";
 }
