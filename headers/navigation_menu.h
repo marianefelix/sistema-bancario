@@ -3,11 +3,19 @@
 
 #include "bank.h"
 #include "bank_account.h"
+#include <pistache/client.h>
+#include "json.hpp"
+
+using namespace Pistache;
+using namespace std;
+using json = nlohmann::json;
 
 class NavigationMenu {
     private:
         int getAccountID();
-        int getTypeAccount();
+        int getAccountType();
+        Http::Experimental::Client client;
+
 
     public:
         NavigationMenu(); //constructor
@@ -15,29 +23,11 @@ class NavigationMenu {
 
         void showOptions();
 
-        void handleSelectedOption(Bank& bank, int selectedOption);
+        void handleSelectedOption(int selectedOption);
 
-        void handleCreateAccount(Bank& bank);
-
-        void handleCreateNormalAccount(Bank& bank);
-
-        void handleCreateSavingsAccount(Bank& bank);
-
-        void handleCreateBonusAccount(Bank& bank);
-
-        void handleConsultAccount(Bank& bank);
-
-        void handleGetBalance(Bank& bank);
-
-        void handleCredit(Bank& bank);
-
-        void handleDebit(Bank& bank);
-
-        void handleTransfer(Bank& bank);
+        void handleCreateAccount();
 
         double handleOpeningBalance();
-
-        void handleInterestRate(Bank& bank);
 };
 
 #endif

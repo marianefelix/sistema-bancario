@@ -1,16 +1,12 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include "../headers/bank.h"
-#include "../headers/bank_account.h"
-#include "../headers/savings_account.h"
 #include "../headers/navigation_menu.h"
-#include "../headers/savings_account.h"
-#include "../headers/bonus_account.h"
 
-using namespace std;
+NavigationMenu::NavigationMenu() {
+  client.init();
+}
 
-NavigationMenu::NavigationMenu() {}
 NavigationMenu::~NavigationMenu() {}
 
 int NavigationMenu::getAccountID() {
@@ -22,18 +18,18 @@ int NavigationMenu::getAccountID() {
   return accountID;
 }
 
-int NavigationMenu::getTypeAccount() {
-  int typeAccount;
+int NavigationMenu::getAccountType() {
+  int accountType;
 
   cout << "---------------------------" << endl;
   cout << "Escolha o tipo de conta:" << endl;
   cout << "1 - Conta Simples" << endl;
   cout << "2 - Conta Poupança" << endl;
   cout << "3 - Conta Bonus" << endl;
-  cin >> typeAccount;
+  cin >> accountType;
   cout << "---------------------------" << endl;
 
-  return typeAccount;
+  return accountType;
 }
 
 void NavigationMenu::showOptions() {
@@ -49,28 +45,28 @@ void NavigationMenu::showOptions() {
   cout << "---------------------------" << endl;
 }
 
-void NavigationMenu::handleSelectedOption(Bank& bank, int selectedOption) {
+void NavigationMenu::handleSelectedOption(int selectedOption) {
   switch(selectedOption) {
     case 1:
-      handleCreateAccount(bank);
+      handleCreateAccount();
       break;
     case 2:
-      handleConsultAccount(bank);
+      // handleConsultAccount();
       break;
     case 3:
-      handleGetBalance(bank);
+      // handleGetBalance();
       break;
     case 4:
-      handleCredit(bank);
+      // handleCredit();
       break;
     case 5:
-      handleDebit(bank);
+      // handleDebit();
       break;
     case 6:
-      handleTransfer(bank);
+      // handleTransfer();
       break;
     case 7:
-      handleInterestRate(bank);
+      // handleInterestRate();
       break;
     case 8:
       cout << "Seção encerrada" << endl;
@@ -78,184 +74,6 @@ void NavigationMenu::handleSelectedOption(Bank& bank, int selectedOption) {
     default:
       cout << "Opção inválida" << endl;
       break;
-  }
-}
-
-void NavigationMenu::handleCreateAccount(Bank& bank) {
-  int typeAccount = getTypeAccount();
-
-  switch(typeAccount) {
-    case 1:
-      handleCreateNormalAccount(bank);
-      break;
-    case 2:
-      handleCreateSavingsAccount(bank);
-      break;
-    case 3:
-      handleCreateBonusAccount(bank);
-      break;
-    default:
-      cout << "Opção inválida" << endl;
-      break;
-  }
-}
-
-void NavigationMenu::handleCreateNormalAccount(Bank& bank) {
-  int accountID = getAccountID();
-  double openingBalance = handleOpeningBalance();
-  string response = bank.addAccount(accountID, openingBalance);
-  cout << response << endl;
-}
-
-void NavigationMenu::handleCreateSavingsAccount(Bank& bank) {
-  int accountID = getAccountID();
-  double openingBalance = handleOpeningBalance();
-  string response = bank.addSavingsAccount(accountID, openingBalance);
-  cout << response << endl;
-}
-
-void NavigationMenu::handleCreateBonusAccount(Bank& bank) {
-  int accountID = getAccountID();
-  string response = bank.addBonusAccount(accountID);
-  cout << response << endl;
-}
-
-void NavigationMenu::handleConsultAccount(Bank& bank) {
-  int accountID = getAccountID();
-  BankAccount* account = bank.getAccountByID(accountID);
-
- if (account == nullptr) {
-    cout << "Essa conta não existe" << endl;
-  } else {
-    string accountType = bank.getAccountType(account);
-    cout << "Tipo: " << accountType << endl;
-    cout << "Número: " << accountID <<  endl;
-    cout << "Saldo: " << account->getBalance() << endl;
-
-    if (accountType == "Conta bônus") {
-      BonusAccount* bonusAccount = dynamic_cast<BonusAccount*>(account);
-      cout << "Bônus: " << bonusAccount->getScore() << endl;
-    }
-  }
-}
-
-void NavigationMenu::handleGetBalance(Bank& bank) {
-  int accountID = getAccountID();
-  BankAccount* account = bank.getAccountByID(accountID);
-
-  if (account == nullptr) {
-      cout << "Essa conta não existe" << endl;
-  } else {
-      double accountBalance = account->getBalance();
-      cout << "O saldo da sua conta é: " << accountBalance <<  endl;
-  }
-}
-
-void NavigationMenu::handleCredit(Bank& bank) {
-  int accountID = getAccountID();
-  double value;
-
-  cout << "Digite o valor a ser creditado: " << endl;
-  cin >> value;
-
-  BankAccount* account = bank.getAccountByID(accountID);
-
-  BonusAccount* bonusAccount = dynamic_cast<BonusAccount*>(account);
-
-  if (account == nullptr) {
-      cout << "Essa conta não existe" << endl;
-  } else if (value < 0) {
-      cout << "Digite um valor maior ou igual a 0." << endl;
-  } else {
-      account->credit(value);
-      double accountBalance = account->getBalance();
-      cout << "Seu novo saldo é: " << accountBalance <<  endl;
-      
-      if(bonusAccount != nullptr) {
-        int bonusValue = bonusAccount->getScore();
-        bonusAccount->addBonusCredit(value);
-        bonusValue = bonusAccount->getScore() - bonusValue;
-        if(bonusValue > 0) {
-          cout << "Seu bonus aumentou " << bonusValue << " ponto(s)! Seu bonus agora é: " << bonusAccount->getScore() << endl;
-        }
-      }
-  }
-}
-
-void NavigationMenu::handleDebit(Bank& bank) {
-  int accountID = getAccountID();
-  double value;
-
-  cout << "Digite o valor a ser debitado: " << endl;
-  cin >> value;
-
-  BankAccount* account = bank.getAccountByID(accountID);
-  if (account == nullptr) {
-      cout << "Essa conta não existe" << endl;
-  } else if (value < 0) {
-      cout << "Digite um valor maior ou igual a 0." << endl;
-  } else {
-      account->debit(value);
-      double accountBalance = account->getBalance();
-      cout << "Seu novo saldo é: " << accountBalance <<  endl;
-  }
-}
-  
-void NavigationMenu::handleTransfer(Bank& bank) {
-  int originAccountID, destinationAccountID;
-  double value;
-
-  cout << "Digite o número da conta de origem: " << endl;
-  cin >> originAccountID;
-
-  cout << "Digite o número da conta de destino: " << endl;
-  cin >> destinationAccountID;
-
-  cout << "Digite o valor a ser transferido: " << endl;
-  cin >> value;
-
-  BankAccount* originAccount = bank.getAccountByID(originAccountID);
-  BankAccount* destinationAccount = bank.getAccountByID(destinationAccountID);
-
-  BonusAccount* bonusAccount = dynamic_cast<BonusAccount*>(destinationAccount);
-
-  if (originAccount == nullptr || destinationAccount == nullptr) {
-      cout << "Erro ao encontrar contas. Por favor, insira um número válido." << endl;
-  } else if (value < 0) {
-      cout << "Digite um valor maior ou igual a 0." << endl;
-  } else {
-      originAccount->transfer(*destinationAccount, value);
-      double accountBalance = originAccount->getBalance();
-      cout << "Seu novo saldo é: " << accountBalance << endl;
-      
-      if(bonusAccount != nullptr) {
-        int bonusValue = bonusAccount->getScore();
-        bonusAccount->addBonusTransfer(value);
-        bonusValue = bonusAccount->getScore() - bonusValue;
-        if(bonusValue > 0) {
-          cout << "O bonus da conta de destino aumentou " << bonusValue << " ponto(s)! Seu bonus agora é: " << bonusAccount->getScore() << endl;
-        }
-      }
-  }
-}
-
-void NavigationMenu::handleInterestRate(Bank& bank) {
-  int accountID = getAccountID();
-  double interestRate;
-
-  BankAccount* account = bank.getAccountByID(accountID);
-
-  SavingsAccount* savingsAccount = dynamic_cast<SavingsAccount*>(account);
-
-  if (savingsAccount == nullptr) {
-    cout << "Essa conta não é uma Conta Poupança." << endl;
-  } else {
-    cout << "Informe a taxa de juros:" << endl;
-    cin >> interestRate;
-
-    savingsAccount->applyInterestRate(interestRate);
-
-    cout << "Saldo atualizado: " << savingsAccount->getBalance() << endl;
   }
 }
 
@@ -276,4 +94,32 @@ double NavigationMenu::handleOpeningBalance() {
   }
 
   return openingBalance;
+}
+
+void NavigationMenu::handleCreateAccount() {
+  int accountType = getAccountType();
+  int accountID = getAccountID();
+  json accountData;
+
+  accountData["type"] = accountType;
+  accountData["id"] = accountID;
+
+  if (accountType == 1 || accountType == 2) {
+    accountData["openingBalance"] = handleOpeningBalance();
+  }
+
+  auto response = client.post("http://localhost:8080/bank/account")
+    .body(accountData.dump())
+    .send();
+
+  response.then(
+    [&](Http::Response res) {
+      if (res.code() == Http::Code::Ok) {
+        cout << res.body() << endl;
+      } else {
+        cout << "Erro: " << res.body() << endl;
+      }
+    },
+    Async::Throw
+  );
 }
