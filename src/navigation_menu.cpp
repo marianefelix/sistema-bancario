@@ -127,16 +127,8 @@ void NavigationMenu::handleConsultAccount(Bank& bank) {
  if (account == nullptr) {
     cout << "Essa conta não existe" << endl;
   } else {
-    string accountType = bank.getAccountType(account);
-    string result = account->consultAccount(accountType);
-
-    if (accountType == "Conta bônus") {
-      BonusAccount* bonusAccount = dynamic_cast<BonusAccount*>(account);
-      result = result + "  |  Bônus: " + to_string(bonusAccount->getScore());
-      cout << result << endl;
-    }else{
-      cout << result << endl;
-    }
+    string result = bank.consultAccount(account);
+    cout << result << endl;
   }
 }
 
@@ -161,22 +153,11 @@ void NavigationMenu::handleCredit(Bank& bank) {
 
   BankAccount* account = bank.getAccountByID(accountID);
 
-  BonusAccount* bonusAccount = dynamic_cast<BonusAccount*>(account);
-
   if (account == nullptr) {
       cout << "Essa conta não existe" << endl;
   } else {
     string result = account->credit(value);
     cout << result << endl;
-
-    if(bonusAccount != nullptr) {
-      int bonusValue = bonusAccount->getScore();
-      bonusAccount->addBonusCredit(value);
-      bonusValue = bonusAccount->getScore() - bonusValue;
-      if(bonusValue > 0) {
-        cout << "Seu bonus aumentou " << bonusValue << " ponto(s)! Seu bonus agora é: " << bonusAccount->getScore() << endl;
-      }
-    }
   }
 }
 
@@ -213,22 +194,11 @@ void NavigationMenu::handleTransfer(Bank& bank) {
   BankAccount* originAccount = bank.getAccountByID(originAccountID);
   BankAccount* destinationAccount = bank.getAccountByID(destinationAccountID);
 
-  BonusAccount* bonusAccount = dynamic_cast<BonusAccount*>(destinationAccount);
-
   if (originAccount == nullptr || destinationAccount == nullptr) {
       cout << "Erro ao encontrar contas. Por favor, insira um número válido." << endl;
   } else {
       string result = originAccount->transfer(*destinationAccount, value);
       cout << result << endl;
-
-      if(bonusAccount != nullptr) {
-        int bonusValue = bonusAccount->getScore();
-        bonusAccount->addBonusTransfer(value);
-        bonusValue = bonusAccount->getScore() - bonusValue;
-        if(bonusValue > 0) {
-          cout << "O bonus da conta de destino aumentou " << bonusValue << " ponto(s)! Seu bonus agora é: " << bonusAccount->getScore() << endl;
-        }
-      }
   }
 }
 

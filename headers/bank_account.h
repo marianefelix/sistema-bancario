@@ -22,9 +22,7 @@ class BankAccount {
 
         void setBalance(double value);
 
-        std::string consultAccount(std::string type);
-
-        std::string credit(double value);
+        virtual std::string credit(double value);
 
         virtual std::string debit(double value);
 

@@ -1,5 +1,6 @@
 #include <vector>
 #include <iostream>
+#include <sstream>
 #include "../headers/bank.h"
 #include "../headers/bank_account.h"
 #include "../headers/generic_account.h"
@@ -87,4 +88,16 @@ std::string Bank::getAccountType(BankAccount* account) {
 
 std::vector<BankAccount*> Bank::getAccounts() {
     return this->accounts;
+}
+
+std::string Bank::consultAccount(BankAccount* account) {
+    string type = getAccountType(account);
+    string result = "Tipo: " + type + "  |  Saldo: " + to_string(account->getBalance()) + "  |  Número: " + to_string(account->getAccountID());
+
+    if (type == "Conta bônus") {
+      BonusAccount* bonusAccount = dynamic_cast<BonusAccount*>(account);
+      result = result + "  |  Bônus: " + to_string(bonusAccount->getScore());
+    }
+
+    return result;
 }

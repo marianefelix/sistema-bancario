@@ -27,11 +27,6 @@ void BankAccount::setBalance(double value) {
     this->balance = value;
 }
 
-std::string BankAccount::consultAccount(std::string type) {
-    string result = "Tipo: " + type + "  |  Saldo: " + to_string(this->balance) + "  |  Número: " + to_string(this->accountID);
-    return result;
-}
-
 std::string BankAccount::credit(double value) {
     if (value >= 0) {
         this->balance = this->balance + value;
