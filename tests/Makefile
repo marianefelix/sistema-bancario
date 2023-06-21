@@ -28,8 +28,7 @@ testapp: objects/test_main.o objects/navigation_menu.o objects/bank.o objects/ba
 create_objects:
 	mkdir objects
 
-all:
-	create_objects testapp
+all: create_objects testapp
 
 run:
 	./testapp
