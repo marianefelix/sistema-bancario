@@ -13,7 +13,7 @@ class SavingsAccount : public BankAccount { // inherits BankAccount class
 
         double getInterestRate() const;
 
-        void applyInterestRate(double value) override;
+        std::string applyInterestRate(double value) override;
 
         std::string debit(double value) override;
 

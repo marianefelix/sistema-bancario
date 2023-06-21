@@ -134,6 +134,8 @@ void NavigationMenu::handleConsultAccount(Bank& bank) {
       BonusAccount* bonusAccount = dynamic_cast<BonusAccount*>(account);
       result = result + "  |  Bônus: " + to_string(bonusAccount->getScore());
       cout << result << endl;
+    }else{
+      cout << result << endl;
     }
   }
 }
@@ -244,9 +246,9 @@ void NavigationMenu::handleInterestRate(Bank& bank) {
     cout << "Informe a taxa de juros:" << endl;
     cin >> interestRate;
 
-    savingsAccount->applyInterestRate(interestRate);
+    string result = savingsAccount->applyInterestRate(interestRate);
 
-    cout << "Saldo atualizado: " << savingsAccount->getBalance() << endl;
+    cout << result << endl;
   }
 }
 

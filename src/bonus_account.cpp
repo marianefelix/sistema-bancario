@@ -21,4 +21,4 @@ double BonusAccount::getScore() const {
     return this->score;
 }
 
-void BonusAccount::applyInterestRate(double) {}
+std::string BonusAccount::applyInterestRate(double) {}

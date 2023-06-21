@@ -13,7 +13,7 @@ class BonusAccount : public BankAccount {
 
         double getScore() const;
         
-        virtual void applyInterestRate(double value);
+        virtual std::string applyInterestRate(double value);
         void addBonusCredit(double value) override;
         void addBonusTransfer(double value) override;
 };

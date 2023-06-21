@@ -10,7 +10,7 @@ class BankAccount {
         BankAccount(int id, double initialBalance); // constructor
         virtual ~BankAccount(); // destructor
 
-        virtual void applyInterestRate(double value) = 0;
+        virtual std::string applyInterestRate(double value) = 0;
 
         virtual void addBonusCredit(double value) = 0;
 

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include "../headers/bank_account.h"
 #include "../headers/bank.h"
 #include "../headers/savings_account.h"
@@ -27,7 +28,7 @@ void BankAccount::setBalance(double value) {
 }
 
 std::string BankAccount::consultAccount(std::string type) {
-    string result = "Tipo: " + type + "  |  Saldo: " + to_string(this->balance) + "  |  Número: " +  + to_string(this->accountID);
+    string result = "Tipo: " + type + "  |  Saldo: " + to_string(this->balance) + "  |  Número: " + to_string(this->accountID);
     return result;
 }
 
@@ -44,9 +45,12 @@ std::string BankAccount::debit(double value) {
     if(value >= 0) {
         double newBalance = this->balance - value;
 
-        if (newBalance >= -1000) {
+        if (newBalance >= 0) {
             this->balance = newBalance;
             string success = "Seu novo saldo é: " + to_string(this->balance);
+            return success;
+        }else{
+            string success = "Não há saldo suficiente para debitar.";
             return success;
         }
     }
@@ -59,6 +63,8 @@ std::string BankAccount::transfer(BankAccount& destination, double value) {
     if (newBalance >= 0 && value >= 0) {
         this->debit(value);
         destination.credit(value);
+        string success = "Seu novo saldo é: " + to_string(this->balance);
+        return success;
     }
 
     if(newBalance < 0){
