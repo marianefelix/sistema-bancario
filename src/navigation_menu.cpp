@@ -122,26 +122,16 @@ void NavigationMenu::handleCreateBonusAccount(Bank& bank) {
 
 void NavigationMenu::handleConsultAccount(Bank& bank) {
   int accountID = getAccountID();
-  BankAccount* account = bank.getAccountByID(accountID);
 
- if (account == nullptr) {
-    cout << "Essa conta não existe" << endl;
-  } else {
-    string result = bank.consultAccount(account);
-    cout << result << endl;
-  }
+  string result = bank.consultAccount(accountID);
+  cout << result << endl;
 }
 
 void NavigationMenu::handleGetBalance(Bank& bank) {
   int accountID = getAccountID();
-  BankAccount* account = bank.getAccountByID(accountID);
 
-  if (account == nullptr) {
-      cout << "Essa conta não existe" << endl;
-  } else {
-      double accountBalance = account->getBalance();
-      cout << "O saldo da sua conta é: " << accountBalance <<  endl;
-  }
+  string result = bank.consultAccountBalance(accountID);
+  cout << result << endl;
 }
 
 void NavigationMenu::handleCredit(Bank& bank) {

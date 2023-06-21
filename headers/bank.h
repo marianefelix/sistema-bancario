@@ -21,7 +21,8 @@ class Bank {
 
         BankAccount* getAccountByID(int accountID);
         std::string getAccountType(BankAccount* account);
-        std::string consultAccount(BankAccount* account);
+        std::string consultAccount(int accountID);
+        std::string consultAccountBalance(int accountID);
 };
 
 #endif
