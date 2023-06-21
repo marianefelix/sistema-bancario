@@ -4,6 +4,7 @@
 #include "../headers/bank_account.h"
 #include "../headers/bonus_account.h"
 #include "../headers/savings_account.h"
+#include "../headers/generic_account.h"
 using namespace std;
 
 Bank* bank = new Bank();
@@ -340,17 +341,17 @@ TEST_CASE("Testing the interest yielding method in savings accounts") {
 
     SECTION("Attempting interest income with simple account type") {
         BankAccount* getGenericAccount = bank->getAccountByID(75);
-        
-        SavingsAccount* savingsAccount = dynamic_cast<SavingsAccount*>(getGenericAccount);
 
-        REQUIRE(savingsAccount == nullptr);
+        double value = 5.0;
+
+        REQUIRE(getGenericAccount->applyInterestRate(value) == "Essa conta não é uma Conta Poupança.");
     }
 
     SECTION("Attempting interest income with bonus account type") {
-        BankAccount* getBonusAccount = bank->getAccountByID(75);
-        
-        BonusAccount* bonusAccount = dynamic_cast<BonusAccount*>(getBonusAccount);
+        BankAccount* getBonusAccount = bank->getAccountByID(70);
 
-        REQUIRE(bonusAccount == nullptr);
+        double value = 5.0;
+
+        REQUIRE(getBonusAccount->applyInterestRate(value) == "Essa conta não é uma Conta Poupança.");
     }
 }
