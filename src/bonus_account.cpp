@@ -52,4 +52,6 @@ std::string BonusAccount::transfer(BankAccount& destination, double value) {
     return "Digite um valor maior ou igual a 0.";
 }
 
-std::string BonusAccount::applyInterestRate(double) {}
+std::string BonusAccount::applyInterestRate(double) {
+    return "Essa conta não é uma Conta Poupança.";
+}

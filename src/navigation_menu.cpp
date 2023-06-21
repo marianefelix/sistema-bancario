@@ -4,7 +4,6 @@
 #include "../headers/navigation_menu.h"
 
 NavigationMenu::NavigationMenu() {
-  client.init();
 }
 
 NavigationMenu::~NavigationMenu() {}
@@ -97,6 +96,8 @@ double NavigationMenu::handleOpeningBalance() {
 }
 
 void NavigationMenu::handleCreateAccount() {
+  client.init();
+
   int accountType = getAccountType();
   int accountID = getAccountID();
   json accountData;
@@ -134,7 +135,7 @@ void NavigationMenu::handleConsultAccount() {
   response.then(
     [&](Http::Response res) {
       if (res.code() == Http::Code::Ok) {
-        cout << "Erro: " << res.body() << endl;
+        cout << res.body() << endl;
       } else {
         cout << "Erro: " << res.body() << endl;
       }
@@ -176,7 +177,7 @@ void NavigationMenu::handleCredit() {
   data["credit"] = value;
 
 
-  auto response = client.put("http://localhost:8080/bank/account" + to_string(accountID) + "/credit")
+  auto response = client.put("http://localhost:8080/bank/account/" + to_string(accountID) + "/credit")
     .body(data.dump())
     .send();
 
@@ -202,7 +203,7 @@ void NavigationMenu::handleDebit() {
   json data;
   data["debit"] = value;
 
-  auto response = client.put("http://localhost:8080/bank/account" + to_string(accountID) + "/debit")
+  auto response = client.put("http://localhost:8080/bank/account/" + to_string(accountID) + "/debit")
     .body(data.dump())
     .send();
 
@@ -253,7 +254,6 @@ void NavigationMenu::handleTransfer() {
 }
 
 void NavigationMenu::handleInterestRate() {
-  int accountID = getAccountID();
   double rate;
 
   cout << "Informe a taxa de juros:" << endl;
@@ -262,7 +262,7 @@ void NavigationMenu::handleInterestRate() {
   json data;
   data["rate"] = rate;
 
-  auto response = client.put("http://localhost:8080/bank/income")
+  auto response = client.put("http://localhost:8080/bank/account/income")
     .body(data.dump())
     .send();
 

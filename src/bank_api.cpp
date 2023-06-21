@@ -21,8 +21,8 @@ void BankAPI::shutdown() {
     httpEndpoint->shutdown();
 }
 
-bool contains(string str, string subString) {
-   return str.find(substr) != std::string::npos
+bool BankAPI::contains(string str, string substring) {
+   return str.find(substring) != std::string::npos;
 }
 
 void BankAPI::setupRoutes() {

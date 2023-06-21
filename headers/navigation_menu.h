@@ -16,7 +16,6 @@ class NavigationMenu {
         int getAccountType();
         Http::Experimental::Client client;
 
-
     public:
         NavigationMenu(); //constructor
         ~NavigationMenu(); //destructor
@@ -24,7 +23,11 @@ class NavigationMenu {
         void showOptions();
         void handleSelectedOption(int selectedOption);
         void handleCreateAccount();
+        void handleConsultAccount();
+        void handleGetBalance();
         double handleOpeningBalance();
+        void handleCredit();
+        void handleDebit();
         void handleTransfer();
         void handleInterestRate();
 };
