@@ -12,8 +12,12 @@ class BonusAccount : public BankAccount {
         virtual ~BonusAccount(); //destructor
 
         double getScore() const;
+
+        std::string credit(double value) override;
+
+        std::string transfer(BankAccount& destination, double value) override;
         
-        virtual void applyInterestRate(double value);
+        virtual std::string applyInterestRate(double value);
         void addBonusCredit(double value) override;
         void addBonusTransfer(double value) override;
 };
