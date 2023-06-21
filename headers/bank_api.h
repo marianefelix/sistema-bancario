@@ -1,6 +1,7 @@
 #ifndef BANK_API_H
 #define BANK_API_H
 
+#include <iostream>
 #include <pistache/endpoint.h>
 #include <pistache/http.h>
 #include "json.hpp"

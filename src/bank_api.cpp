@@ -50,18 +50,31 @@ void BankAPI::setupRoutes() {
 // TODO: enhance logic to remove code repetitions
 void BankAPI::createAccount(const Rest::Request& request, Http::ResponseWriter response) {
     json payload = json::parse(request.body());
-    
-    int accountType = payload["type"];
-    int accountID = payload["id"];
-    double accountOpeningBalance = payload["openingBalance"].get<double>();
+
+    if(!payload.contains("id")) {
+        response.send(Http::Code::Bad_Request, "Necessário informar ID da conta");
+        return;
+    } else if(!payload.contains("type")) {
+        response.send(Http::Code::Bad_Request, "Necessário informar tipo da conta");
+        return;
+    } else if((!payload.contains("openingBalance")) && (payload["type"] == 1 || payload["type"] == 2)) {
+        response.send(Http::Code::Bad_Request, "Necessário informar saldo inicial");
+        return;
+    } 
+
+    int accountID = payload["id"].get<int>();
+    int accountType = payload["type"].get<int>();
+    double accountOpeningBalance;
     std::string result;
     
     switch(accountType) {
     case 1:
+        accountOpeningBalance = payload["openingBalance"].get<double>();
         result = bank.addAccount(accountID, accountOpeningBalance);
         "Essa conta já existe." == result ? response.send(Http::Code::Bad_Request, result) : response.send(Http::Code::Ok, result);
       break;
     case 2:
+        accountOpeningBalance = payload["openingBalance"].get<double>();
         result = bank.addSavingsAccount(accountID, accountOpeningBalance);
         "Essa conta já existe." == result ? response.send(Http::Code::Bad_Request, result) : response.send(Http::Code::Ok, result);
       break;
@@ -80,8 +93,6 @@ void BankAPI::createAccount(const Rest::Request& request, Http::ResponseWriter r
 void BankAPI::consultAccount(const Rest::Request& request, Http::ResponseWriter response) {
     int accountID = std::stoi(request.param(":accountID").as<std::string>());
     BankAccount* account = bank.getAccountByID(accountID);
-    //int accountType = bank.getAccountTypeInt();
-
 
     if(account == nullptr) {
         response.send(Http::Code::Not_Found, "Conta não encontrada");
