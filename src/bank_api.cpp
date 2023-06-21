@@ -122,7 +122,14 @@ void BankAPI::consultAccountBalance(const Rest::Request& request, Http::Response
 
 void BankAPI::creditAccount(const Rest::Request& request, Http::ResponseWriter response) {
     int accountID = std::stoi(request.param(":accountID").as<std::string>());
-    double value = std::stod(request.body());
+    json payload = json::parse(request.body());
+
+    if(!payload.contains("credit")) {
+        response.send(Http::Code::Bad_Request, "Necessário informar valor a ser creditado");
+        return;
+    }
+
+    double value = payload["credit"].get<double>();
 
     BankAccount* account = bank.getAccountByID(accountID);
 
@@ -136,7 +143,14 @@ void BankAPI::creditAccount(const Rest::Request& request, Http::ResponseWriter r
 
 void BankAPI::debitAccount(const Rest::Request& request, Http::ResponseWriter response) {
     int accountID = std::stoi(request.param(":accountID").as<std::string>());
-    double value = std::stod(request.body());
+    json payload = json::parse(request.body());
+
+    if(!payload.contains("debit")) {
+        response.send(Http::Code::Bad_Request, "Necessário informar valor a ser debitado");
+        return;
+    }
+
+    double value = payload["debit"].get<double>();
 
     BankAccount* account = bank.getAccountByID(accountID);
 
@@ -164,7 +178,15 @@ void BankAPI::transferBetweenAccounts(const Rest::Request& request, Http::Respon
 }
 
 void BankAPI::income(const Rest::Request& request, Http::ResponseWriter response) {
-    double rate = std::stod(request.body());
+    json payload = json::parse(request.body());
+
+    if(!payload.contains("rate")) {
+        response.send(Http::Code::Bad_Request, "Necessário informar taxa de rendimento");
+        return;
+    }
+
+    double rate = payload["rate"].get<double>();
+
     std::vector<BankAccount*> allAccounts = bank.getAccounts();
 
     try {
