@@ -17,6 +17,7 @@ class Bank {
         std::string addAccount(int accountID, double openingBalance);
         std::string addSavingsAccount(int accountID, double openingBalance);
         std::string addBonusAccount(int accountID);
+        std::vector<BankAccount*> getAccounts();
 
         BankAccount* getAccountByID(int accountID);
         std::string getAccountType(BankAccount* account);

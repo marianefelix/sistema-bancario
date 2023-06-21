@@ -84,3 +84,7 @@ std::string Bank::getAccountType(BankAccount* account) {
 
     return "Conta poupança";
 }
+
+std::vector<BankAccount*> Bank::getAccounts() {
+    return this->accounts;
+}
