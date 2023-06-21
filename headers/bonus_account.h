@@ -13,8 +13,6 @@ class BonusAccount : public BankAccount {
 
         double getScore() const;
 
-        // std::string debit(double value) override;
-
         std::string credit(double value) override;
 
         std::string transfer(BankAccount& destination, double value) override;
