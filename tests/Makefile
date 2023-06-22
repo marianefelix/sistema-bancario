@@ -15,13 +15,10 @@ objects/bonus_account.o: ../src/bonus_account.cpp ../headers/bonus_account.h obj
 objects/bank.o: ../src/bank.cpp ../headers/bank.h objects/bank_account.o objects/generic_account.o objects/savings_account.o objects/bonus_account.o
 	g++ ../src/bank.cpp -Iheaders -Wall -ansi -pedantic -std=c++11 -g -c -o objects/bank.o
 
-objects/navigation_menu.o: ../src/navigation_menu.cpp ../headers/navigation_menu.h objects/bank_account.o objects/generic_account.o objects/savings_account.o
-	g++ ../src/navigation_menu.cpp -Iheaders -Wall -ansi -pedantic -std=c++11 -g -c -o objects/navigation_menu.o
-
 objects/test_main.o: test_main.cpp objects/bank.o
 	g++ test_main.cpp -Iheaders -Wall -ansi -pedantic -std=c++11 -g -c -o objects/test_main.o
 
-testapp: objects/test_main.o objects/navigation_menu.o objects/bank.o objects/bank_account.o objects/generic_account.o objects/savings_account.o objects/bonus_account.o
+testapp: objects/test_main.o objects/bank.o objects/bank_account.o objects/generic_account.o objects/savings_account.o objects/bonus_account.o
 	g++ objects/*.o -Iheaders -Wall -ansi -pedantic -std=c++11 -g -o testapp
 
 # cria a pasta objects
