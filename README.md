@@ -3,7 +3,7 @@ This system simulates a simple bank. The main purpose of this repository is to p
 
 <br>
 
-## Project informations
+# Project informations
 - Workflow: **`GitFlow`**
 
 - We use a commit pattern that can be found here: [**Conventional Commits**](https://www.conventionalcommits.org/en/v1.0.0/)
@@ -25,7 +25,8 @@ This system simulates a simple bank. The main purpose of this repository is to p
 <br>
 <br>
 
-## Compile and run with Makefile
+# APP
+### **Compile and run with Makefile**
 If your operating system is **`Windows`**, you must have MinGW installed.
 If not, please install it.
 If you do, follow the next steps to run the system:
@@ -48,7 +49,7 @@ If your operating system is **`Linux`**, you only need to follow these steps:
 
 <br>
 
-## Compile and run without using Makefile
+### **Compile and run without using Makefile**
 From the root of the project
 
 > $ `g++ -std=c++11 -Wall -Wextra -c src/bank_account.cpp src/savings_account.cpp src/generic_account.cpp src/bonus_account.cpp  src/bank.cpp src/navigation_menu.cpp src/main.cpp`
@@ -58,3 +59,45 @@ From the root of the project
 and then
 
 > $ `./bankapp`
+
+<br>
+<br>
+
+# TESTING
+### **Compile and run with Makefile**
+The tests implemented were unit tests for bank operations - no requests to the REST API layer.
+
+So if your operating system is **`Windows`**, you must have MinGW installed.
+If not, please install it.
+If you do, follow the next steps to run the tests:
+- Access the "tests" folder that is present in the project root
+> $ `cd .\tests\`
+- In the terminal, run the command:
+> $ `mingw32-make`
+- In the terminal, run the command:
+> $ `./testapp`
+- The tests will be executed.
+
+<br>
+
+If your operating system is **`Linux`**, you only need to follow these steps:
+- Access the "tests" folder that is present in the project root
+> $ `cd .\tests\`
+- In the terminal, run the command:
+> $ `make`
+- In the terminal, run the command:
+> $ `./testapp`
+- The tests will be executed.
+
+<br>
+
+### **Compile and run without using Makefile**
+From the root of the project
+
+> $ `g++ -std=c++11 -Wall -Wextra -c ../src/bank_account.cpp ../src/savings_account.cpp ../src/generic_account.cpp ../src/bonus_account.cpp ../src/bank.cpp test_main.cpp`
+
+> $ `g++ -o testapp bank_account.o savings_account.o generic_account.o bonus_account.o bank.o test_main.o`
+
+and then
+
+> $ `./testapp`
