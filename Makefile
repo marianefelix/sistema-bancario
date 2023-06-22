@@ -18,10 +18,13 @@ objects/bank.o: src/bank.cpp headers/bank.h objects/bank_account.o objects/gener
 objects/navigation_menu.o: src/navigation_menu.cpp headers/navigation_menu.h objects/bank_account.o objects/generic_account.o objects/savings_account.o
 	g++ src/navigation_menu.cpp -Iheaders -Wall -ansi -pedantic -std=c++11 -g -c -o objects/navigation_menu.o
 
-objects/main.o: src/main.cpp objects/navigation_menu.o objects/bank.o
+objects/bank_api.o: src/bank_api.cpp headers/bank_api.h headers/bank.h headers/bank_account.h headers/generic_account.h headers/savings_account.h headers/bonus_account.h
+	g++ src/bank_api.cpp -Iheaders -Wall -ansi -pedantic -std=c++11 -g -c -o objects/bank_api.o
+
+objects/main.o: src/main.cpp objects/navigation_menu.o objects/bank.o objects/bank_api.o
 	g++ src/main.cpp -Iheaders -Wall -ansi -pedantic -std=c++11 -g -c -o objects/main.o
 
-bankapp: objects/main.o objects/navigation_menu.o objects/bank.o objects/bank_account.o objects/generic_account.o objects/savings_account.o objects/bonus_account.o
+bankapp: objects/main.o objects/navigation_menu.o objects/bank.o objects/bank_account.o objects/generic_account.o objects/savings_account.o objects/bonus_account.o objects/bank_api.o
 	g++ objects/*.o -Iheaders -Wall -ansi -pedantic -std=c++11 -g -o bankapp
 
 # cria a pasta objects
