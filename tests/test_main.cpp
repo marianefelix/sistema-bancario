@@ -244,7 +244,7 @@ TEST_CASE("Testing the inter-account transfer method") {
         bank->addAccount(75, 500);
         BankAccount* getGenericAccount = bank->getAccountByID(75);
 
-        REQUIRE(getGenericAccount->transfer(*getSavingsAccount, 20.0) == "Transferência realizada com sucesso! Seu novo saldo é: 480.000000");
+        REQUIRE(getGenericAccount->transfer(*getSavingsAccount, 20.0) == "Transferência realizada com sucesso!\n Seu novo saldo é: 480.000000");
     }
 
     SECTION("Transfer Simple account to Bonus account successfully") {
@@ -254,35 +254,35 @@ TEST_CASE("Testing the inter-account transfer method") {
 
         BankAccount* getGenericAccount = bank->getAccountByID(75);
 
-        REQUIRE(getGenericAccount->transfer(*getBonusAccount, 20.0) == "Transferência realizada com sucesso! Seu novo saldo é: 460.000000");
+        REQUIRE(getGenericAccount->transfer(*getBonusAccount, 20.0) == "Transferência realizada com sucesso!\n Seu novo saldo é: 460.000000");
     }
     
     SECTION("Transfer Savings account to Simple account successfully") {
         BankAccount* getSavingsAccount = bank->getAccountByID(50);
         BankAccount* getGenericAccount = bank->getAccountByID(75);
 
-        REQUIRE(getSavingsAccount->transfer(*getGenericAccount, 20.0) == "Transferência realizada com sucesso! Seu novo saldo é: 500.000000");
+        REQUIRE(getSavingsAccount->transfer(*getGenericAccount, 20.0) == "Transferência realizada com sucesso!\n Seu novo saldo é: 500.000000");
     }
     
     SECTION("Transfer Savings account to Bonus account successfully") {
         BankAccount* getSavingsAccount = bank->getAccountByID(50);
         BankAccount* getBonusAccount = bank->getAccountByID(70);
 
-        REQUIRE(getSavingsAccount->transfer(*getBonusAccount, 20.0) == "Transferência realizada com sucesso! Seu novo saldo é: 480.000000");
+        REQUIRE(getSavingsAccount->transfer(*getBonusAccount, 20.0) == "Transferência realizada com sucesso!\n Seu novo saldo é: 480.000000");
     }
     
     SECTION("Transfer Bonus account to Simple account successfully") {
         BankAccount* getBonusAccount = bank->getAccountByID(70);
         BankAccount* getGenericAccount = bank->getAccountByID(75);
 
-        REQUIRE(getBonusAccount->transfer(*getGenericAccount, 20.0) == "Transferência realizada com sucesso! Seu novo saldo é: 520.000000  |  Seu bonus atualizado: 15.000000");
+        REQUIRE(getBonusAccount->transfer(*getGenericAccount, 20.0) == "Transferência realizada com sucesso!\n Seu novo saldo é: 520.000000  |  Seu bonus atualizado: 15.000000");
     }
     
     SECTION("Transfer Bonus account to Savings account successfully") {
         BankAccount* getSavingsAccount = bank->getAccountByID(50);
         BankAccount* getBonusAccount = bank->getAccountByID(70);
 
-        REQUIRE(getBonusAccount->transfer(*getSavingsAccount, 200) == "Transferência realizada com sucesso! Seu novo saldo é: 320.000000  |  Seu bonus atualizado: 16.000000");
+        REQUIRE(getBonusAccount->transfer(*getSavingsAccount, 200) == "Transferência realizada com sucesso!\n Seu novo saldo é: 320.000000  |  Seu bonus atualizado: 16.000000");
     }
 
     SECTION("Transfer Simple account to Bonus account unsuccessful since negative value") {

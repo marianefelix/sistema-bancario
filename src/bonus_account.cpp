@@ -41,7 +41,7 @@ std::string BonusAccount::transfer(BankAccount& destination, double value) {
         this->debit(value);
         destination.credit(value);
         addBonusTransfer(value);
-        string success = "Seu novo saldo é: " + to_string(this->getBalance()) + "  |  Seu bonus atualizado: " + to_string(this->getScore());
+        string success = "Transferência realizada com sucesso!\n Seu novo saldo é: " + to_string(this->getBalance()) + "  |  Seu bonus atualizado: " + to_string(this->getScore());
         return success;
     }
 
