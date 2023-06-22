@@ -32,6 +32,8 @@ class BankAPI {
         void debitAccount(const Rest::Request& request, Http::ResponseWriter response);
         void transferBetweenAccounts(const Rest::Request& request, Http::ResponseWriter response);
         void income(const Rest::Request& request, Http::ResponseWriter response);
+        bool contains(string str, string subString);
+
         Bank bank;
         Rest::Router router;
         shared_ptr<Http::Endpoint> httpEndpoint;
