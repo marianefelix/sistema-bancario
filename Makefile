@@ -25,7 +25,7 @@ objects/main.o: src/main.cpp objects/navigation_menu.o objects/bank.o objects/ba
 	g++ src/main.cpp -Iheaders -Wall -ansi -pedantic -std=c++11 -g -c -o objects/main.o
 
 bankapp: objects/main.o objects/navigation_menu.o objects/bank.o objects/bank_account.o objects/generic_account.o objects/savings_account.o objects/bonus_account.o objects/bank_api.o
-	g++ objects/*.o -Iheaders -Wall -ansi -pedantic -std=c++11 -g -o bankapp
+	g++ objects/*.o -Iheaders -Wall -ansi -pedantic -std=c++11 -g -o bankapp -lpistache
 
 # cria a pasta objects
 create_objects:
