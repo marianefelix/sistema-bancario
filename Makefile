@@ -31,6 +31,9 @@ bankapp: objects/main.o objects/navigation_menu.o objects/bank.o objects/bank_ac
 create_objects:
 	mkdir objects
 
+# create_variable:
+# 	export LD_LIBRARY_PATH=/path/to/pistache/lib
+
 all: create_objects bankapp
 
 run:
