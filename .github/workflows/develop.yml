@@ -32,6 +32,6 @@ jobs:
       
     - name: Create tag
       run: |
-        TAG_NAME="build-${{ github.run_number }}"
+        TAG_NAME="build-$(date +%s)"
         git tag $TAG_NAME
         git push --tags
