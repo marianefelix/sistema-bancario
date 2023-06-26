@@ -1,0 +1,40 @@
+name: CI Bank System C++
+
+on:
+  pull_request:
+    branches: develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Pistache
+      run: |
+        sudo add-apt-repository ppa:pistache+team/unstable -y
+        sudo apt update
+        sudo apt install libpistache-dev -y
+    
+    - name: Set Pistache variable
+      run: export LD_LIBRARY_PATH=/path/to/pistache/lib
+      
+    - name: Build system
+      # run: make
+      run: |
+        g++ -std=c++17 -Wall -Wextra -c src/bank_account.cpp src/savings_account.cpp src/generic_account.cpp src/bonus_account.cpp  src/bank.cpp src/navigation_menu.cpp src/main.cpp src/bank_api.cpp
+        g++ -o bankapp bank_account.o savings_account.o generic_account.o bonus_account.o  bank.o navigation_menu.o main.o bank_api.o -lpistache
+      
+    - name: Run tests
+      run: |
+        cd tests
+        make
+        ./testapp
+        cd ..
+      
+    - name: Create tag
+      run: |
+        TAG_NAME="build-${{ github.run_number }}"
+        git tag $TAG_NAME
+        git push --tags
