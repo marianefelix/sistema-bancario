@@ -32,6 +32,6 @@ jobs:
       
     - name: Create tag
       run: |
-        TAG_NAME="build-$(date +%s)"
+        TAG_NAME="build-$(date +'%Y-%m-%dT%H:%M:%S')"
         git tag $TAG_NAME
         git push --tags
