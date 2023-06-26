@@ -1,0 +1,37 @@
+name: CI Bank System C++
+
+on:
+  pull_request:
+    branches: develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Pistache
+      run: |
+        sudo add-apt-repository ppa:pistache+team/unstable -y
+        sudo apt update
+        sudo apt install libpistache-dev -y
+    
+    - name: Set Pistache variable
+      run: export LD_LIBRARY_PATH=/path/to/pistache/lib
+      
+    - name: Build system
+      run: make
+      
+    - name: Run tests
+      run: |
+        cd tests
+        make
+        ./testapp
+        cd ..
+      
+    - name: Create tag
+      run: |
+        TAG_NAME="build-$(date +'%m%d%Y%H%M%S')"
+        git tag $TAG_NAME
+        git push --tags
