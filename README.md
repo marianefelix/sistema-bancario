@@ -26,7 +26,7 @@ This system simulates a simple bank. The main purpose of this repository is to p
 <br>
 
 # APP
-After implementing the frontend communication with the backend through a Rest API, we had the need to ninch the operating system to Ubuntu due to the framework we used, Pistache, which requires its execution to be done through this OS. Therefore, the banking system must run on this OS, either on the machine itself or using a virtual machine.  TESTE
+After implementing the frontend communication with the backend through a Rest API, we had the need to ninch the operating system to Ubuntu due to the framework we used, Pistache, which requires its execution to be done through this OS. Therefore, the banking system must run on this OS, either on the machine itself or using a virtual machine.
 
 <br>
 
