@@ -1,7 +1,7 @@
 name: CI Bank System C++
 
 on:
-  push:
+  pull_request:
     branches: develop
 
 jobs:
