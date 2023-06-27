@@ -33,8 +33,8 @@ jobs:
     - name: Create tag
       run: |
         LAST_TAG=$(git describe --tags --abbrev=0 || echo "build-0.0.0")
-        LAST_NUMBER=$(echo $LAST_TAG | sed 's/build-//')
-        NEXT_NUMBER=$(echo $LAST_NUMBER + 1 | bc)
+        LAST_NUMBER=$(echo $LAST_TAG | sed 's/build-//' | awk -F. '{ printf("%d.%d.%d", $1, $2, $3) }')
+        NEXT_NUMBER=$(echo $LAST_NUMBER | awk -F. -v OFS=. '{$NF+=1;print}')
         TAG_NAME="build-$NEXT_NUMBER"
         git tag $TAG_NAME
         git push --tags
