@@ -32,6 +32,9 @@ jobs:
       
     - name: Create tag
       run: |
-        TAG_NAME="build-$(date +'%m%d%Y%H%M%S')"
+        LAST_TAG=$(git describe --tags --abbrev=0 || echo "build-0")
+        LAST_NUMBER=$(echo $LAST_TAG | sed 's/build-//')
+        NEXT_NUMBER=$((LAST_NUMBER + 1))
+        TAG_NAME="build-$NEXT_NUMBER"
         git tag $TAG_NAME
         git push --tags
