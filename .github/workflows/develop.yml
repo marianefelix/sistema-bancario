@@ -32,10 +32,14 @@ jobs:
       
     - name: Create tag
       run: |
-        sudo apt-get install semver
         LAST_TAG=$(git describe --tags --abbrev=0 || echo "build-0.0.3")
         LAST_VERSION=$(echo $LAST_TAG | sed 's/build-//')
-        NEXT_VERSION=$(semver -i patch $LAST_VERSION)
+        IFS='.' read -r -a VERSION_ARRAY <<< "$LAST_VERSION"
+        MAJOR=${VERSION_ARRAY[0]}
+        MINOR=${VERSION_ARRAY[1]}
+        PATCH=${VERSION_ARRAY[2]}
+        NEXT_PATCH=$((PATCH + 1))
+        NEXT_VERSION="$MAJOR.$MINOR.$NEXT_PATCH"
         TAG_NAME="build-$NEXT_VERSION"
         git tag $TAG_NAME
         git push --tags
