@@ -34,7 +34,7 @@ jobs:
       run: |
         LAST_TAG=$(git describe --tags --abbrev=0 || echo "build-0.0.0")
         LAST_NUMBER=$(echo $LAST_TAG | sed 's/build-//')
-        NEXT_NUMBER=$(echo $LAST_NUMBER | awk -F. -v OFS=. '{$NF++;print}')
+        NEXT_NUMBER=$(echo $LAST_NUMBER + 1 | bc)
         TAG_NAME="build-$NEXT_NUMBER"
         git tag $TAG_NAME
         git push --tags
