@@ -26,7 +26,7 @@ This system simulates a simple bank. The main purpose of this repository is to p
 <br>
 
 # APP
-After implementing the frontend communication with the backend through a Rest API, we had the need to ninch the operating system to Ubuntu due to the framework we used, Pistache, which requires its execution to be done through this OS. Therefore, the banking system must run on this OS, either on the machine itself or using a virtual machine.
+After implementing the frontend communication with the backend through a Rest API, we had the need to ninch the operating system to Ubuntu due to the framework we use, Pistache, which requires its execution to be done through this OS. Thus, the banking system has to run on this OS, either on the machine itself or using a virtual machine. Also, the cpp version has been updated to version 17.
 
 <br>
 
@@ -59,10 +59,9 @@ and then
 <br>
 
 # TESTING
-The tests implemented were unit tests for the banking operations - without calls to the REST API layer. Therefore, because it does not use API communication, there is no need to run the tests on an Ubuntu operating system.
+The tests implemented were unit tests for the banking operations - without calls to the REST API layer. Therefore, since it does not use API communication, it is not necessary to run the tests on an Ubuntu operating system. In addition, we chose to use cpp version 17.
 
 <br>
-
 
 ### **Compile and run with Makefile**
 So if your operating system is **`Windows`**, you must have MinGW installed.
@@ -92,7 +91,7 @@ If your operating system is **`Ubuntu`**, you only need to follow these steps:
 ### **Compile and run without using Makefile**
 From the root of the project
 
-> $ `g++ -std=c++11 -Wall -Wextra -c ../src/bank_account.cpp ../src/savings_account.cpp ../src/generic_account.cpp ../src/bonus_account.cpp ../src/bank.cpp test_main.cpp`
+> $ `g++ -std=c++17 -Wall -Wextra -c ../src/bank_account.cpp ../src/savings_account.cpp ../src/generic_account.cpp ../src/bonus_account.cpp ../src/bank.cpp test_main.cpp`
 
 > $ `g++ -o testapp bank_account.o savings_account.o generic_account.o bonus_account.o bank.o test_main.o`
 
