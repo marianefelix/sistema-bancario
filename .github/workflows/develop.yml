@@ -12,6 +12,7 @@ jobs:
   test:
     uses: marianefelix/sistema-bancario/.github/workflows/test.yml@develop
   generate_tag:
+    needs: [build, test]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
