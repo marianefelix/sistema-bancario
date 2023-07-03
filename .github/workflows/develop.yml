@@ -14,6 +14,8 @@ jobs:
   generate_tag:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
       - name: Create and push tag
         run: |
           TAG_NAME="build-$(date +'%m%d%Y%H%M%S')"
