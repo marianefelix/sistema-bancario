@@ -1,0 +1,24 @@
+name: Build C++ Project
+
+on:
+  workflow_call:
+
+jobs:
+  build_system:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+    
+      - name: Set up Pistache
+        run: |
+          sudo add-apt-repository ppa:pistache+team/unstable -y
+          sudo apt update
+          sudo apt install libpistache-dev -y
+      
+      - name: Set Pistache variable
+        run: export LD_LIBRARY_PATH=/path/to/pistache/lib
+        
+      - name: Build system
+        run: make

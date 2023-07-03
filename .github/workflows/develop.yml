@@ -1,37 +1,19 @@
 name: CI Bank System C++
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - develop
 
 jobs:
   build:
+    uses: marianefelix/sistema-bancario/.github/workflows/build.yml@develop
+  test:
+    uses: marianefelix/sistema-bancario/.github/workflows/test.yml@develop
+  generate_tag:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-    
-      - name: Set up Pistache
-        run: |
-          sudo add-apt-repository ppa:pistache+team/unstable -y
-          sudo apt update
-          sudo apt install libpistache-dev -y
-      
-      - name: Set Pistache variable
-        run: export LD_LIBRARY_PATH=/path/to/pistache/lib
-        
-      - name: Build system
-        run: make
-        
-      - name: Run tests
-        run: |
-          cd tests
-          make
-          ./testapp
-          cd ..
-        
       - name: Create and push tag
         run: |
           TAG_NAME="build-$(date +'%m%d%Y%H%M%S')"
