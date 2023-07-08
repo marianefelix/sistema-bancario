@@ -1,9 +1,9 @@
-name: Release Candidate Artifact
+name: Production Release Artifact
 
 on:
   push:
     tags:
-      - rc-*
+      - rel-*
 
 jobs:
   build:
@@ -23,11 +23,11 @@ jobs:
       - name: Create Archive
         run: |
           git fetch
-          git checkout release
-          zip -r rc.zip .
+          git checkout main
+          zip -r release.zip .
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: release-candidate-artifact
-          path: rc.zip
+          name: release-artifact
+          path: release.zip
