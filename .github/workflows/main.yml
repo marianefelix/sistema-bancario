@@ -1,9 +1,12 @@
 name: Production Release Artifact
 
 on:
-  push:
-    tags:
-      - rel-*
+  pull_request:
+    branches:
+      - main
+  # push:
+  #   tags:
+  #     - rel-*
 
 jobs:
   build:
