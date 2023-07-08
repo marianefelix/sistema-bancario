@@ -1,7 +1,6 @@
 name: Production Release Artifact
 
 on:
-  workflow_dispatch:
   pull_request:
     branches:
       - main
@@ -36,6 +35,25 @@ jobs:
           name: release-artifact
           path: release.zip
   docker:
-    uses: marianefelix/sistema-bancario/.github/workflows/docker.yml@hotfix/87-docker-workflow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login in Docker Hub Account
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Docker Image
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/bank-system:latest .
+      - name: Publish Docker Image
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/bank-system:latest
     
 
