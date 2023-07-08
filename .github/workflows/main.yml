@@ -1,0 +1,36 @@
+name: Production Release Artifact
+
+on:
+  push:
+    tags:
+      - rel-*
+
+jobs:
+  build:
+    uses: marianefelix/sistema-bancario/.github/workflows/build.yml@develop
+  quality:
+    uses: marianefelix/sistema-bancario/.github/workflows/quality.yml@develop
+  test:
+    needs: build
+    uses: marianefelix/sistema-bancario/.github/workflows/test.yml@develop
+  generate-artifact:
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Create Archive
+        run: |
+          git fetch
+          git checkout main
+          zip -r release.zip .
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-artifact
+          path: release.zip
+  docker:
+    uses: marianefelix/sistema-bancario/.github/workflows/docker.yml@develop
+

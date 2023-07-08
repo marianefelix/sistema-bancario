@@ -7,7 +7,7 @@ class GenericAccount : public BankAccount {
   public:
     GenericAccount(int id, double initialBalance);
     virtual ~GenericAccount();
-    virtual void applyInterestRate(double value);
+    virtual std::string applyInterestRate(double value);
     virtual void addBonusCredit(double value);
     virtual void addBonusTransfer(double value);
 };

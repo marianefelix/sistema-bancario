@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include "../headers/savings_account.h"
 using namespace std;
 
@@ -12,9 +13,11 @@ double SavingsAccount::getInterestRate() const {
     return this->interestRate;
 }
 
-void SavingsAccount::applyInterestRate(double value) {
+std::string SavingsAccount::applyInterestRate(double value) {
     double interest = this->getBalance() * (value / 100);
     this->credit(interest);
+    string result = "Saldo atualizado: " + to_string(this->getBalance());
+    return result;
 }
 
 void SavingsAccount::addBonusCredit(double) {}

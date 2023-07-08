@@ -1,0 +1,33 @@
+name: Release Candidate Artifact
+
+on:
+  push:
+    tags:
+      - rc-*
+
+jobs:
+  build:
+    uses: marianefelix/sistema-bancario/.github/workflows/build.yml@develop
+  quality:
+    uses: marianefelix/sistema-bancario/.github/workflows/quality.yml@develop
+  test:
+    needs: build
+    uses: marianefelix/sistema-bancario/.github/workflows/test.yml@develop
+  generate-artifact:
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Create Archive
+        run: |
+          git fetch
+          git checkout release
+          zip -r rc.zip .
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-candidate-artifact
+          path: rc.zip

@@ -1,0 +1,19 @@
+name: cpp-linter
+
+on: workflow_call
+
+jobs:
+  cpp-linter:
+    runs-on: ubuntu-latest
+    
+    steps:     
+      - uses: actions/checkout@v3
+      
+      - name: Super Linter
+        uses: github/super-linter@v3.15.5
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            DEFAULT_BRANCH: release
+            #VALIDATE_ALL_CODEBASE: false
+            DISABLE_ERRORS: true
+            OUTPUT_DETAILS: detailed
