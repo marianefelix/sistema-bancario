@@ -8,8 +8,8 @@ on:
 jobs:
   build:
     uses: marianefelix/sistema-bancario/.github/workflows/build.yml@develop
-  #quality:
-  #  uses: 
+  quality:
+    uses: marianefelix/sistema-bancario/.github/workflows/quality.yml@develop
   test:
     needs: build
     uses: marianefelix/sistema-bancario/.github/workflows/test.yml@develop
