@@ -7,12 +7,12 @@ on:
 
 jobs:
   build:
-    uses: marianefelix/sistema-bancario/.github/workflows/build.yml@develop
+    uses: marianefelix/sistema-bancario/.github/workflows/build.yml@main
   quality:
-    uses: marianefelix/sistema-bancario/.github/workflows/quality.yml@develop
+    uses: marianefelix/sistema-bancario/.github/workflows/quality.yml@main
   test:
     needs: build
-    uses: marianefelix/sistema-bancario/.github/workflows/test.yml@develop
+    uses: marianefelix/sistema-bancario/.github/workflows/test.yml@main
   generate-artifact:
     needs: [build, test]
     runs-on: ubuntu-latest
