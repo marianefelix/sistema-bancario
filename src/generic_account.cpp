@@ -7,6 +7,9 @@ GenericAccount::GenericAccount(int id, double initialBalance)
 
 GenericAccount::~GenericAccount() {}
 
-void GenericAccount::applyInterestRate(double) {}
+std::string GenericAccount::applyInterestRate(double) {
+    return "Essa conta não é uma Conta Poupança.";
+}
+
 void GenericAccount::addBonusCredit(double) {}
 void GenericAccount::addBonusTransfer(double) {}

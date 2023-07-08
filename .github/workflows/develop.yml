@@ -1,0 +1,25 @@
+name: CI Bank System C++
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    uses: marianefelix/sistema-bancario/.github/workflows/build.yml@develop
+  test:
+    needs: build
+    uses: marianefelix/sistema-bancario/.github/workflows/test.yml@develop
+  generate_tag:
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Create and push tag
+        run: |
+          TAG_NAME="build-$(date +'%m%d%Y%H%M%S')"
+          git tag $TAG_NAME
+          git push --tags
