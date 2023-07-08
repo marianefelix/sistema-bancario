@@ -1,9 +1,6 @@
 name: Production Release Artifact
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
     tags:
       - rel-*
@@ -55,5 +52,3 @@ jobs:
       - name: Publish Docker Image
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/bank-system:latest
-    
-
