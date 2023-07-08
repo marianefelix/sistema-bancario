@@ -31,3 +31,6 @@ jobs:
         with:
           name: release-artifact
           path: release.zip
+  docker:
+    uses: marianefelix/sistema-bancario/.github/workflows/docker.yml@develop
+
